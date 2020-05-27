@@ -12,5 +12,7 @@
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return 'this is a home';
 });
+
+include base_path('routes/admin/admin.php');
