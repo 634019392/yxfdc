@@ -47,6 +47,8 @@
             <dd>
                 <ul>
                     <li><a data-href="{{ route('admin.users.index') }}" data-title="用户列表" href="javascript:void(0)">用户列表</a></li>
+                    <li><a data-href="{{ route('admin.roles.index') }}" data-title="角色列表" href="javascript:void(0)">角色列表</a></li>
+                    <li><a data-href="{{ route('admin.nodes.index') }}" data-title="权限列表" href="javascript:void(0)">权限列表</a></li>
                 </ul>
             </dd>
         </dl>

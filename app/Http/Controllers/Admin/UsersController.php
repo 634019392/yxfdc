@@ -80,15 +80,10 @@ class UsersController extends BaseController
             'password' => 'nullable|confirmed',
             'sex' => 'required',
             'phone' => 'required|phone',
-            'email' => 'required|email'
+            'email' => "required|email|unique:users,email,{$id},id"
         ]);
-        $update_data = [];
         $user = User::find($id);
-        $update_data = $request->only(['truename', 'phone', 'sex']);
-        // 邮箱重复性问题
-        if ($user->email !== $request->email) {
-            $update_data['email'] = $request->email;
-        }
+        $update_data = $request->only(['truename', 'phone', 'sex', 'email']);
 
         if ($request->password) {
             $update_data['password'] = bcrypt($request->password);

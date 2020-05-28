@@ -35,6 +35,17 @@ Route::group(['prefix' => 'admin', 'namespace' => 'Admin', 'as' => 'admin.'], fu
         // 全选软删除
         Route::delete('users/delall', 'UsersController@delall')->name('users.delall');
 
+        // 角色管理-资源路由
+        Route::get('roles/restore/{role_id}', 'RolesController@restore')->name('roles.restore');
+        Route::delete('roles/delall', 'RolesController@delall')->name('roles.delall');
+        Route::resource('roles', 'RolesController');
+
+        // 权限管理-资源路由
+        Route::get('nodes/restore/{role_id}', 'NodesController@restore')->name('nodes.restore');
+        Route::delete('nodes/delall', 'NodesController@delall')->name('nodes.delall');
+        Route::resource('nodes', 'NodesController');
+
+
     });
 
 

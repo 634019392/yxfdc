@@ -116,10 +116,14 @@
                         data: {ids:ids, _token:_token},
                     }).then(res => {
                         if (res.status === 0) {
-                            layer.msg(res.msg, {time:1000, icon:1});
-                            location.reload();
+                            layer.msg(res.msg, {time:1000, icon:1}, () => {
+                                location.reload();
+                            });
                         }
                     })
+                } else {
+                    layer.msg('请选择最少一条', {time: 1000})
+                    layer.close(index);
                 }
 
             });
