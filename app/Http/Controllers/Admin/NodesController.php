@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Models\Node;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Validator;
 
 class NodesController extends BaseController
 {
@@ -13,9 +14,14 @@ class NodesController extends BaseController
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $nodes = Node::all();
+        $kw = $request->get('kw');
+        $nodes = Node::withTrashed()->when($kw, function($query) use ($kw) {
+            $query->where('name', 'like', "%{$kw}%");
+        })->get();
+        $nodes = treeLevel($nodes->toArray());
+
         return view('admin.nodes.index', compact('nodes'));
     }
 
@@ -38,15 +44,14 @@ class NodesController extends BaseController
      */
     public function store(Request $request)
     {
-//        try {
-//            $this->validate($request, [
-//                'name' => 'required',
-//                'route_name' => 'required',
-//                'is_menu' => 'required'
-//            ]);
-//        } catch (\Exception $e) {
-//            return ['status' => '422', '验证信息没通过'];
-//        }
+        try {
+            $this->validate($request, [
+                'name' => 'required|unique:nodes,name',
+                'is_menu' => 'required'
+            ]);
+        } catch (\Exception $e) {
+            return ['status' => '422', 'msg' => '验证信息没通过'];
+        }
         $create_data = $request->only(['name', 'route_name', 'is_menu', 'pid']);
         Node::create($create_data);
         return ['status' => 0, 'msg' => '添加成功'];
@@ -72,7 +77,8 @@ class NodesController extends BaseController
      */
     public function edit(Node $node)
     {
-        //
+        $pids_0 = Node::where('pid', 0)->get();
+        return view('admin.nodes.edit', compact('node', 'pids_0'));
     }
 
     /**
@@ -84,7 +90,17 @@ class NodesController extends BaseController
      */
     public function update(Request $request, Node $node)
     {
-        //
+        try {
+            $this->validate($request, [
+                'name' => "required|unique:nodes,name,{$node->id},id",
+                'is_menu' => 'required'
+            ]);
+        } catch (\Exception $e) {
+            return ['status' => '422', 'msg' => '验证信息没通过'];
+        }
+        $update_data = $request->only('name', 'route_name', 'is_menu', 'pid');
+        $node->update($update_data);
+        return ['status' => 0, 'msg' => '修改成功'];
     }
 
     /**

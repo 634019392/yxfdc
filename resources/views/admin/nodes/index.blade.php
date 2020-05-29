@@ -18,7 +18,7 @@
                     批量删除</a>
                 <a href="{{ route('admin.nodes.create') }}" class="btn btn-primary radius">
                     <i class="icon-plus"></i>
-                    添加角色</a>
+                    添加权限</a>
             </span>
             <span class="r">共有数据：<strong>{{ count($nodes) }}</strong> 条</span>
         </div>
@@ -38,19 +38,26 @@
             @foreach($nodes as $node)
                 <tr class="text-c">
                     <td>
-                        <input type="checkbox" value="{{ $node->id }}" name="ids[]">
+                        <input type="checkbox" value="{{ $node['id'] }}" name="ids[]">
                     </td>
-                    <td>{{ $node->id }}</td>
-                    <td>{{ $node->name }}</td>
-                    <td>{{ $node->route_name }}</td>
-                    <td>{{ $node->is_menu }}</td>
-                    <td>{{ $node->created_at }}</td>
-                    <td class="f-14 node-manage">
-                        @if ($node->deleted_at)
-                            <a href="{{ route('admin.nodes.restore', ['node_id' => $node]) }}" class="label label-warning radius">还原</a>
+                    <td>{{ $node['id'] }}</td>
+                    <td class="text-l">{{ $node['html'] }}{{ $node['name'] }}</td>
+                    <td>{{ $node['route_name'] }}</td>
+                    {{--<td>{!! $node->menu !!}</td>--}}
+                    <td>
+                        @if($node['is_menu'])
+                            <span class="label label-success radius">是</span>
                         @else
-                            <a href="{{ route('admin.nodes.edit', $node) }}" class="label label-secondary radius">编辑</a>
-                            <a href="{{ route('admin.nodes.destroy', ['node' => $node]) }}" class="label label-danger radius delbtn">删除</a>
+                            <span class="label label-danger radius">否</span>
+                        @endif
+                    </td>
+                    <td>{{ $node['created_at'] }}</td>
+                    <td class="f-14 node-manage">
+                        @if ($node['deleted_at'])
+                            <a href="{{ route('admin.nodes.restore', ['node_id' => $node['id']]) }}" class="label label-warning radius">还原</a>
+                        @else
+                            <a href="{{ route('admin.nodes.edit', $node['id']) }}" class="label label-secondary radius">编辑</a>
+                            <a href="{{ route('admin.nodes.destroy', ['node' => $node['id']]) }}" class="label label-danger radius delbtn">删除</a>
                         @endif
                     </td>
                 </tr>

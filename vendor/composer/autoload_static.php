@@ -22,6 +22,7 @@ class ComposerStaticInitcd4e1ad64e27965ab5c577a389864cac
         '6124b4c8570aa390c21fafd04a26c69f' => __DIR__ . '/..' . '/myclabs/deep-copy/src/DeepCopy/deep_copy.php',
         '801c31d8ed748cfa537fa45402288c95' => __DIR__ . '/..' . '/psy/psysh/src/functions.php',
         '0d8253363903f0ac7b0978dcde4e28a0' => __DIR__ . '/..' . '/beyondcode/laravel-dump-server/helpers.php',
+        '424691d6780caab2ff1c854a364ae67d' => __DIR__ . '/../..' . '/app/Http/Helpers/admin.php',
     );
 
     public static $prefixLengthsPsr4 = array (
@@ -470,6 +471,8 @@ class ComposerStaticInitcd4e1ad64e27965ab5c577a389864cac
         'App\\Http\\Controllers\\Admin\\BaseController' => __DIR__ . '/../..' . '/app/Http/Controllers/Admin/BaseController.php',
         'App\\Http\\Controllers\\Admin\\IndexsController' => __DIR__ . '/../..' . '/app/Http/Controllers/Admin/IndexsController.php',
         'App\\Http\\Controllers\\Admin\\LoginsController' => __DIR__ . '/../..' . '/app/Http/Controllers/Admin/LoginsController.php',
+        'App\\Http\\Controllers\\Admin\\NodesController' => __DIR__ . '/../..' . '/app/Http/Controllers/Admin/NodesController.php',
+        'App\\Http\\Controllers\\Admin\\RolesController' => __DIR__ . '/../..' . '/app/Http/Controllers/Admin/RolesController.php',
         'App\\Http\\Controllers\\Admin\\UsersController' => __DIR__ . '/../..' . '/app/Http/Controllers/Admin/UsersController.php',
         'App\\Http\\Controllers\\Controller' => __DIR__ . '/../..' . '/app/Http/Controllers/Controller.php',
         'App\\Http\\Kernel' => __DIR__ . '/../..' . '/app/Http/Kernel.php',
@@ -481,6 +484,7 @@ class ComposerStaticInitcd4e1ad64e27965ab5c577a389864cac
         'App\\Http\\Middleware\\TrimStrings' => __DIR__ . '/../..' . '/app/Http/Middleware/TrimStrings.php',
         'App\\Http\\Middleware\\TrustProxies' => __DIR__ . '/../..' . '/app/Http/Middleware/TrustProxies.php',
         'App\\Http\\Middleware\\VerifyCsrfToken' => __DIR__ . '/../..' . '/app/Http/Middleware/VerifyCsrfToken.php',
+        'App\\Models\\Base' => __DIR__ . '/../..' . '/app/Models/Base.php',
         'App\\Models\\Node' => __DIR__ . '/../..' . '/app/Models/Node.php',
         'App\\Models\\Role' => __DIR__ . '/../..' . '/app/Models/Role.php',
         'App\\Models\\User' => __DIR__ . '/../..' . '/app/Models/User.php',

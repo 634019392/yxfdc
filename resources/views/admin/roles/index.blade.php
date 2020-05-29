@@ -37,7 +37,9 @@
             @foreach($roles as $role)
                 <tr class="text-c">
                     <td>
-                        <input type="checkbox" value="{{ $role->id }}" name="ids[]">
+                        @if (!$role->deleted_at)
+                            <input type="checkbox" value="{{ $role->id }}" name="ids[]">
+                        @endif
                     </td>
                     <td>{{ $role->id }}</td>
                     <td>{{ $role->name }}</td>
