@@ -44,7 +44,7 @@
                     <td>{{ $role->id }}</td>
                     <td>{{ $role->name }}</td>
                     <td class="role-status">
-                        <a href="#" class="label label-success radius">权限</a>
+                        <a href="{{ route('admin.roles.node', $role) }}" class="label label-success radius">权限</a>
                     </td>
                     <td>{{ $role->created_at }}</td>
                     <td class="f-14 role-manage">

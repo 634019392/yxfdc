@@ -27,6 +27,13 @@ class LoginsController extends Controller
         ]);
 
         if (auth()->attempt($post, $request->has('remember'))) {
+            $c_user_node = auth()->user()->role->nodes()->pluck('route_name', 'id')->toArray();
+            if (auth()->user()->username != config('rbac.super')) {
+                session(['admin.auth' => $c_user_node]);
+            } else {
+                session(['admin.auth' => true]);
+            }
+
             return redirect()->route('admin.index');
         } else {
             return redirect()->route('admin.login')->withErrors(['error' => '登录失败  /(ㄒoㄒ)/~~']);

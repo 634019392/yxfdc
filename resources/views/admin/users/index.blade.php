@@ -28,14 +28,15 @@
             <thead>
             <tr class="text-c">
                 <th width="25"><input type="checkbox" name="" value=""></th>
-                <th width="80">ID</th>
-                <th width="100">用户名</th>
-                <th width="100">真实姓名</th>
+                <th width="50">ID</th>
+                <th width="70">用户名</th>
+                <th width="80">真实姓名</th>
+                <th width="70">角色名称</th>
                 <th width="40">性别</th>
                 <th width="90">手机</th>
                 <th width="150">邮箱</th>
                 <th width="130">加入时间</th>
-                <th width="70">状态</th>
+                <th width="50">状态</th>
                 <th width="100">操作</th>
             </tr>
             </thead>
@@ -52,17 +53,19 @@
                     <td>{{ $user->id }}</td>
                     <td>{{ $user->username }}</td>
                     <td>{{ $user->truename }}</td>
+                    <td>{{ $user->role->name }}</td>
                     <td>{{ $user->sex }}</td>
                     <td>{{ $user->phone }}</td>
                     <td>{{ $user->email }}</td>
                     <td>{{ $user->created_at }}</td>
                     <td class="user-status"><span class="label label-success">已启用</span></td>
                     <td class="f-14 user-manage">
+                        <a href="{{ route('admin.users.role', $user) }}" class="label label-secondary radius">分配角色</a>
+                        {!! $user->editBtn('admin.users.edit') !!}
                         @if(auth()->id() !== $user->id)
                             @if($user->deleted_at)
                                 <a href="{{ route('admin.users.restore', ['user_id' => $user->id]) }}" class="label label-warning radius">还原</a>
                             @else
-                                <a href="{{ route('admin.users.edit', $user) }}" class="label label-secondary radius">编辑</a>
                                 <a href="{{ route('admin.users.destroy', ['user' => $user]) }}" class="label label-danger radius delbtn">删除</a>
                             @endif
                         @endif

@@ -34,8 +34,12 @@ Route::group(['prefix' => 'admin', 'namespace' => 'Admin', 'as' => 'admin.'], fu
         Route::get('users/restore/{user_id}', 'UsersController@restore')->name('users.restore');
         // 全选软删除
         Route::delete('users/delall', 'UsersController@delall')->name('users.delall');
+        Route::match(['get', 'post'], 'users/role/{user}','UsersController@role')->name('users.role');
 
         // 角色管理-资源路由
+        // 给角色分配权限
+        Route::get('roles/nodes/{role}', 'RolesController@node')->name('roles.node');
+        Route::post('roles/nodes/{role}', 'RolesController@nodeSave')->name('roles.node');
         Route::get('roles/restore/{role_id}', 'RolesController@restore')->name('roles.restore');
         Route::delete('roles/delall', 'RolesController@delall')->name('roles.delall');
         Route::resource('roles', 'RolesController');

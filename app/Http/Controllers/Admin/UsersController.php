@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Models\Role;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Mail\Message;
@@ -96,5 +97,22 @@ class UsersController extends BaseController
             return redirect()->back()->withErrors('原密码错误');
         }
 
+    }
+
+    // 分配角色
+    public function role(Request $request, User $user)
+    {
+        // 判断是否是post提示
+        if ($request->isMethod('post')){
+            $post = $this->validate($request,[
+                'role_id'=>'required'
+            ],['role_id.required'=>'角色必须选择']);
+
+            $user->update($post);
+            return redirect(route('admin.users.index'));
+        }
+
+        $roleAll = Role::all();
+        return view('admin.users.role', compact('roleAll', 'user'));
     }
 }

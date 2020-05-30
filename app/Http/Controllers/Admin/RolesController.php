@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Models\Node;
 use App\Models\Role;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -9,9 +10,9 @@ use App\Http\Controllers\Controller;
 class RolesController extends BaseController
 {
     /**
-     * Display a listing of the resource.
      * 角色列表显示
-     * @return \Illuminate\Http\Response
+     * @param Request $request
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
     public function index(Request $request)
     {
@@ -111,8 +112,8 @@ class RolesController extends BaseController
     }
 
     /**
-     * @param $user_id
      * 还原
+     * @param $user_id
      * @return $this
      */
     public function restore($user_id)
@@ -124,12 +125,32 @@ class RolesController extends BaseController
     }
 
     /**
-     * @param $ids
+     * 全选删除
+     * @param Request $request
+     * @return array
      */
     public function delall(Request $request)
     {
         $ids = $request->get('ids');
         Role::destroy($ids);
         return ['status' => 0, 'msg' => '全选删除成功'];
+    }
+
+    // 显示给角色分配权限页面
+    public function node(Role $role)
+    {
+        // 读取出所有的权限
+        $nodeAll =  treeLevel((new Node())->all()->toArray());
+        // 读取当前角色所拥有的权限
+        $nodes = $role->nodes()->pluck('id')->toArray();
+        return view('admin.roles.node', compact('role', 'nodeAll', 'nodes'));
+    }
+
+    // 给角色分配权限处理
+    public function nodeSave(Request $request, Role $role)
+    {
+        $node_ids = $request->get('node_ids');
+        $role->nodes()->sync($node_ids);
+        return redirect()->route('admin.roles.node', $role)->with('success', '修改成功');
     }
 }

@@ -15,3 +15,18 @@ function treeLevel($data, $pid = 0, $html = '--', $level = 0)
     return $arr;
 
 }
+
+function subTree($data, $pid = 0)
+{
+    $arr = [];
+
+    foreach ($data as $val) {
+        if ($pid == $val['pid']) {
+            $val['child'] = subTree($data, $val['id']);
+            $arr[] = $val;
+        }
+    }
+
+    return $arr;
+
+}
