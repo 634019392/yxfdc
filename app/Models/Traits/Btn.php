@@ -20,4 +20,13 @@ trait Btn
             return '<a href="' . route($route_name, $this) . '" class="label label-secondary radius">编辑</a>';
         }
     }
+
+    public function deleteBtn($route_name)
+    {
+        if (auth()->user()->username != config('rbac.super') && !in_array($route_name, request()->admin_auth)) {
+            return '';
+        } else {
+            return '<a href="' . route($route_name, $this) . '" class="label label-danger radius">删除</a>';
+        }
+    }
 }
