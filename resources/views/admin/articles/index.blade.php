@@ -32,7 +32,7 @@
                 <th width="50">标题</th>
                 <th width="50">摘要</th>
                 <th width="70">封面</th>
-                <th width="70">内容</th>
+                {{--<th width="70">内容</th>--}}
                 <th width="100">创建时间</th>
                 <th width="100">操作</th>
             </tr>
@@ -50,7 +50,7 @@
             // 隐藏搜索
             searching: false,
             columnDefs: [
-                {targets: [6], orderable: false},
+                {targets: [5], orderable: false},
             ],
             // 开启服务器模式
             serverSide: true,
@@ -79,25 +79,26 @@
                 {'data': 'title', 'className': 'text-c'},
                 {'data': 'desn', 'className': 'text-c'},
                 {'data': 'pic', 'className': 'text-c'},
-                {'data': 'body', 'className': 'text-c'},
+//                {'data': 'body', 'className': 'text-c'},
                 {'data': 'created_at', 'className': 'text-c'},
-                {'data': 'action', "defaultContent": "编辑或添加", 'className': 'text-c'},
+                {'data': 'action123', "defaultContent": "编辑或添加", 'className': 'text-c'},
             ],
             /*
+            操控dom来添加编辑和删除按钮
             如果上面 {'data': 'action', "defaultContent": "编辑", 'className': 'text-c'},中不是追加字段action,则默认显示回调函数的编辑和删除按钮
             创建tr/td时的回调函数，可以继续修改、优化tr/td的显示，里边有遍历效果，会依次扫描生成的每个tr
             row:创建好的tr的dom对象
             data:数据源，代表服务器端返回的每条记录的实体信息
             dataIndex:数据源的索引号码
             */
-//                createdRow: function (row, data, dataIndex) {
-//                    var id = data.id;
-//                    var html = `
-//                    <a href="/admin/articles/${id}/edit" class="label label-secondary radius">编辑</a>
-//                    <a href="/admin/articles/${id}" class="label label-danger radius delbtn">删除</a>
-//                    `;
-//                    $(row).find('td:last-child').html(html)
-//                }
+            createdRow: function (row, data, dataIndex) {
+                var id = data.id;
+                var html = `
+                    <a href="/admin/articles/${id}/edit" class="label label-secondary radius">编辑</a>
+                    <a href="/admin/articles/${id}" onclick="return delArticle(event, this)" class="label label-danger radius delbtn">删除</a>
+                    `;
+                $(row).find('td:last-child').html(html)
+            }
         });
 
         // 表单提交
@@ -107,5 +108,72 @@
             // 取消表单默认行为
             return false;
         }
+
+        // 删除文章
+        function delArticle2(obj) {
+            let url = $(obj).attr('href');
+
+            // 正常操作
+            {{--let ret = fetch(url, {--}}
+            {{--method: 'delete',--}}
+            {{--headers: {--}}
+            {{--'X-CSRF-TOKEN': "{{csrf_token()}}",--}}
+            {{--'Content-Type': 'application/json'--}}
+            {{--},--}}
+            {{--body: JSON.stringify('_token="{{csrf_token()}}"'),--}}
+            {{--});--}}
+            {{--ret.then(data => {--}}
+            {{--var ret = data.json();--}}
+            {{--ret.then(data=>console.log(data))--}}
+            {{--});--}}
+
+            // 正常操作略修改
+            let ret = fetch(url, {
+                method: 'delete',
+                headers: {
+                    'X-CSRF-TOKEN': "{{csrf_token()}}",
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify('_token="{{csrf_token()}}"'),
+            });
+            // 与正常操作.then的写法不同
+            ret.then(data => {
+                return ret = data.json();
+            }).then(data => console.log(data));
+
+            return false;
+        }
+
+
+        // 删除文章
+        function delArticle(evt, obj) {
+            evt.preventDefault();
+            layer.confirm('确定删除？', {
+                btn: ['是的','取消'] //按钮
+            },async function () {
+                let url = $(obj).attr('href');
+
+                let ret = await fetch(url, {
+                    method: 'delete',
+                    headers: {
+                        'X-CSRF-TOKEN': "{{csrf_token()}}",
+                        'Content-Type': 'application/json'
+                    },
+                });
+                // 与正常操作.then的写法不同
+                let json = await ret.json();
+                if (json.status == 0) {
+                    layer.msg(json.msg, {time:1000, icon:1}, () => {
+                        location.reload()
+                    })
+                }
+
+            });
+
+
+
+            return false;
+        }
+
     </script>
 @stop

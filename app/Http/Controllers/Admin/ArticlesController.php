@@ -87,7 +87,7 @@ class ArticlesController extends Controller
             $pic = $request->file('pic')->store('', 'article');
         }
         $post = $request->except('_token');
-        $post['pic'] = '/uploads/article/'.$pic;
+        $post['pic'] = '/uploads/article/' . $pic;
 
         // 添加到数据库中
         Article::create($post);
@@ -114,19 +114,23 @@ class ArticlesController extends Controller
      */
     public function edit(Article $article)
     {
-        //
+        return view('admin.articles.edit', compact('article'));
     }
 
     /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request $request
-     * @param  \App\Models\Article $article
-     * @return \Illuminate\Http\Response
+     * 未完善：上传图片
+     * @param AddArticleRequest $request
+     * @param Article $article
+     * @return \Illuminate\Http\RedirectResponse
      */
-    public function update(Request $request, Article $article)
+    public function update(AddArticleRequest $request, Article $article)
     {
-        //
+        $post = $request->except('_token', '_method', 'file');
+
+        // 添加到数据库中
+        $article->update($post);
+        session()->flash('success', '文章修改成功');
+        return redirect()->route('admin.articles.index');
     }
 
     /**
@@ -135,8 +139,21 @@ class ArticlesController extends Controller
      * @param  \App\Models\Article $article
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Article $article)
+    public function destroy(Article $article, Request $request)
     {
-        //
+        $article->delete();
+        return ['status' => 0, 'msg' => '删除成功'];
+    }
+
+    public function upfile(Request $request)
+    {
+        $pic = config('up.pic');
+        if ($request->hasFile('file')) {
+            // store()中的article是config->filesystems.php中自定义的参数
+            $ret = $request->file('file')->store('', 'article');
+            $pic = '/uploads/article/' . $ret;
+        }
+
+        return ['status' => 0, 'url' => $pic];
     }
 }

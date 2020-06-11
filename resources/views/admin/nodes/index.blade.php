@@ -7,7 +7,7 @@
     <div class="pd-20">
         <div class="text-c"> 搜索权限：
             <form action="{{ route('admin.nodes.index') }}" method="get">
-                <input type="text" class="input-text" style="width:250px" value="{{ request()->get('kw') }}" placeholder="输入角色名称" id="" name="kw">
+                <input type="text" class="input-text" style="width:250px" value="{{ request()->get('kw') }}" placeholder="输入权限名称" id="" name="kw">
                 <button type="submit" class="btn btn-success"><i class="icon-search"></i> 搜权限名称</button>
             </form>
         </div>

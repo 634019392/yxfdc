@@ -49,6 +49,8 @@ Route::group(['prefix' => 'admin', 'namespace' => 'Admin', 'as' => 'admin.'], fu
         Route::delete('nodes/delall', 'NodesController@delall')->name('nodes.delall');
         Route::resource('nodes', 'NodesController');
 
+        // 文章管理 admin/article/upfile
+        Route::post('articles/upfile','ArticlesController@upfile')->name('articles.upfile');
         // 文章管理
         Route::resource('articles', 'ArticlesController');
 
