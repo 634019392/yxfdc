@@ -54,6 +54,8 @@ Route::group(['prefix' => 'admin', 'namespace' => 'Admin', 'as' => 'admin.'], fu
         // 文章管理
         Route::resource('articles', 'ArticlesController');
 
+        // 房源属性
+        Route::resource('fangattrs', 'FangattrsController');
 
 
     });
