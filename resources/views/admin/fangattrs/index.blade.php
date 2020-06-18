@@ -1,14 +1,15 @@
 @extends('admin.common.main')
 
-@section('title', '权限列表')
+@section('title_first', '房源属性管理')
+@section('title', '房源属性列表')
 
 @section('content')
 
     <div class="pd-20">
-        <div class="text-c"> 搜索权限：
+        <div class="text-c"> 搜索房源：
             <form action="{{ route('admin.fangattrs.index') }}" method="get">
-                <input type="text" class="input-text" style="width:250px" value="{{ request()->get('kw') }}" placeholder="输入权限名称" id="" name="kw">
-                <button type="submit" class="btn btn-success"><i class="icon-search"></i> 搜权限名称</button>
+                <input type="text" class="input-text" style="width:250px" value="{{ request()->get('kw') }}" placeholder="输入房源名称" id="" name="kw">
+                <button type="submit" class="btn btn-success"><i class="icon-search"></i> 搜房源名称</button>
             </form>
         </div>
         <div class="cl pd-5 bg-1 bk-gray mt-20">
@@ -18,7 +19,7 @@
                     批量删除</a>
                 <a href="{{ route('admin.fangattrs.create') }}" class="btn btn-primary radius">
                     <i class="icon-plus"></i>
-                    添加权限</a>
+                    添加房源属性</a>
             </span>
             <span class="r">共有数据：<strong>{{ count($fangattrs) }}</strong> 条</span>
         </div>
@@ -27,9 +28,9 @@
             <tr class="text-c">
                 <th width="25"><input type="checkbox" name="" value=""></th>
                 <th width="80">ID</th>
-                <th width="100">权限名称</th>
-                <th width="70">路由别名</th>
-                <th width="70">是否菜单</th>
+                <th width="100">房源属性名称</th>
+                <th width="70">图标</th>
+                <th width="70">字段名称</th>
                 <th width="100">创建时间</th>
                 <th width="100">操作</th>
             </tr>
@@ -41,15 +42,16 @@
                         <input type="checkbox" value="{{ $fangattr['id'] }}" name="ids[]">
                     </td>
                     <td>{{ $fangattr['id'] }}</td>
-                    <td class="text-l">{{ $fangattr['html'] }}{{ $fangattr['name'] }}</td>
-                    <td>{{ $fangattr['route_name'] }}</td>
+                    <td class="text-l">
+                        {{ $fangattr['html'] }}
+                        {{ $fangattr['name'] }}
+                    </td>
+                    <td>
+                        <img src="{{ $fangattr['icon'] }}" style="width: 50px;">
+                    </td>
                     {{--<td>{!! $fangattr->menu !!}</td>--}}
                     <td>
-                        @if($fangattr['is_menu'])
-                            <span class="label label-success radius">是</span>
-                        @else
-                            <span class="label label-danger radius">否</span>
-                        @endif
+                        {{ $fangattr['field_name'] }}
                     </td>
                     <td>{{ $fangattr['created_at'] }}</td>
                     <td class="f-14 node-manage">
