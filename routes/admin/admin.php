@@ -55,6 +55,7 @@ Route::group(['prefix' => 'admin', 'namespace' => 'Admin', 'as' => 'admin.'], fu
         Route::resource('articles', 'ArticlesController');
 
         // 房源属性
+        Route::post('fangattrs/upfile', 'FangattrsController@upfile')->name('fangattrs.upfile');
         Route::resource('fangattrs', 'FangattrsController');
 
 

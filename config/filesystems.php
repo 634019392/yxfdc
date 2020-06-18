@@ -53,6 +53,11 @@ return [
             'root' => public_path('/uploads/article'),
         ],
 
+        'fangattrs' => [
+            'driver' => 'local',
+            'root' => public_path('/uploads/fangattrs'),
+        ],
+
         'public' => [
             'driver' => 'local',
             'root' => storage_path('app/public'),

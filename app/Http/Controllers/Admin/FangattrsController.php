@@ -27,7 +27,23 @@ class FangattrsController extends Controller
      */
     public function create()
     {
-        //
+        $pids_0 = Fangattr::where('pid', 0)->get();
+        return view('admin.fangattrs.create', compact('pids_0'));
+    }
+
+    /**
+     * 图片上传
+     */
+    public function upfile(Request $request) {
+        // 默认图标
+        $pic = config('up.pic');
+        if ($request->hasFile('file')) {
+            // 上传
+            // 参数2 配置的节点名称
+            $ret = $request->file('file')->store('', 'fangattrs');
+            $pic = '/uploads/fangattrs/' . $ret;
+        }
+        return ['status' => 0, 'url' => $pic];
     }
 
     /**
@@ -38,7 +54,21 @@ class FangattrsController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        // 表单验证
+        $this->validate($request, [
+            'name' => 'required',
+            //'field_name' => 'required'
+        ]);
+
+        // 验证通过后，入库并跳转到列表页面
+        // 获取数据
+        $postData = $request->except(['_token', 'file']);
+        // 因为字段不能为null，而我们没有传数据，所以一定解决手段
+        $postData['field_name'] = !empty($postData['field_name']) ? $postData['field_name'] : '';
+        // 入库
+        Fangattr::create($postData);
+        // 跳转
+        return redirect(route('admin.fangattrs.index'));
     }
 
     /**
