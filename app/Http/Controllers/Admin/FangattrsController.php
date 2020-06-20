@@ -112,6 +112,10 @@ class FangattrsController extends Controller
         // 验证通过后，入库并跳转到列表页面
         // 获取数据
         $postData = $request->except(['_token', 'file', '_method']);
+        // 如果pid为0(首级)则不允许更新
+        if ($fangattr->pid == 0) {
+            $postData['pid'] = 0;
+        }
         // 因为字段不能为null，而我们没有传数据，所以一定解决手段
         $postData['field_name'] = !empty($postData['field_name']) ? $postData['field_name'] : '';
         $fangattr->update($postData);
