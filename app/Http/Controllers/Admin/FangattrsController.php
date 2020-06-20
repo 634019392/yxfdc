@@ -88,9 +88,10 @@ class FangattrsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Fangattr $fangattr)
     {
-        //
+        $pids_0 = Fangattr::where('pid', 0)->get();
+        return view('admin.fangattrs.edit', compact('fangattr', 'pids_0'));
     }
 
     /**
@@ -100,9 +101,21 @@ class FangattrsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, Fangattr $fangattr)
     {
-        //
+        // 表单验证
+        $this->validate($request, [
+            'name' => 'required',
+            //'field_name' => 'required'
+        ]);
+
+        // 验证通过后，入库并跳转到列表页面
+        // 获取数据
+        $postData = $request->except(['_token', 'file', '_method']);
+        // 因为字段不能为null，而我们没有传数据，所以一定解决手段
+        $postData['field_name'] = !empty($postData['field_name']) ? $postData['field_name'] : '';
+        $fangattr->update($postData);
+        return redirect()->route('admin.fangattrs.index')->with('success', '编辑成功');
     }
 
     /**

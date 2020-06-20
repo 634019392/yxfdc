@@ -19,7 +19,7 @@
             <div class="row cl">
                 <label class="form-label col-xs-4 col-sm-3"><span class="c-red">*</span>是否顶级：</label>
                 <div class="formControls col-xs-8 col-sm-9"><span class="select-box">
-                        <select class="select" @change="changePid">
+                        <select class="select" @change="changePid" name="pid">
                             <option value="0" selected="">===顶级===</option>
                             @foreach($pids_0 as $item)
                                 <option value="{{ $item->id }}">{{ $item->name }}</option>
