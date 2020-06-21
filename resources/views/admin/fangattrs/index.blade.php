@@ -55,8 +55,9 @@
                     </td>
                     <td>{{ $fangattr['created_at'] }}</td>
                     <td class="f-14 node-manage">
-                        <a href="{{ route('admin.fangattrs.edit', $fangattr['id']) }}" class="label label-secondary radius">编辑</a>
-                        <a href="{{ route('admin.fangattrs.destroy', ['node' => $fangattr['id']]) }}" class="label label-danger radius delbtn">删除</a>
+                        {!! $fangattr['action'] !!}
+                        {{--<a href="{{ route('admin.fangattrs.edit', $fangattr['id']) }}" class="label label-secondary radius">编辑</a>--}}
+                        {{--<a href="{{ route('admin.fangattrs.destroy', ['node' => $fangattr['id']]) }}" class="label label-danger radius delbtn">删除</a>--}}
                     </td>
                 </tr>
             @endforeach
@@ -71,19 +72,27 @@
         const _token = "{{ csrf_token() }}";
         // 单个删除
         $('.delbtn').click(function () {
-            let url = $(this).attr('href');
-            $.ajax({
-                url: url,
-                type: 'delete',
-                data: {_token: _token}
-            }).then(res => {
-                if (res.status === 0) {
-                    layer.msg(res.msg, {time: 1000, icon: 1}, () => {
+            let _this = $(this);
+            //询问框
+            layer.confirm('确定是全选删除？', {
+                btn: ['是的', '取消'] //按钮
+            }, function (index) {
+                let url = _this.attr('href');
+                $.ajax({
+                    url: url,
+                    type: 'delete',
+                    data: {_token: _token}
+                }).then(res => {
+                    if (res.status === 0) {
+                        layer.msg(res.msg, {time: 1000, icon: 1}, () => {
 //                        $(this).parents('tr').remove()
-                        window.location.reload()
-                    });
-                }
-            })
+                            window.location.reload()
+                        });
+                    } else {
+                        layer.msg(res.msg, {time: 1000, icon: 1});
+                    }
+                })
+            });
             return false;
         })
 

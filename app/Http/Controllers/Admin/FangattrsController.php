@@ -123,13 +123,15 @@ class FangattrsController extends Controller
     }
 
     /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @param Fangattr $fangattr
+     * @return array
      */
-    public function destroy($id)
+    public function destroy(Fangattr $fangattr)
     {
-        //
+        if ($fangattr->pid == 0) {
+            return ['status' => 403, 'msg' => '无法删除顶级目录'];
+        }
+        $fangattr->delete();
+        return ['status' => 0, 'msg' => '删除成功'];
     }
 }

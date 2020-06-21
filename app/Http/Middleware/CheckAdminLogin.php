@@ -3,6 +3,7 @@
 namespace App\Http\Middleware;
 
 use Closure;
+use Illuminate\Support\Facades\URL;
 
 class CheckAdminLogin
 {
@@ -29,6 +30,8 @@ class CheckAdminLogin
         }
         $allow_route = array_merge(config('rbac.allow_route'), $c_user_node);
         if (auth()->user()->username != config('rbac.super') && !in_array($current_route_name, $allow_route)) {
+            $previousUrl = URL::previous();
+            return response()->view('admin.common._permission', compact('previousUrl'));
             exit('没有权限，此处页面要优化');
         }
 
