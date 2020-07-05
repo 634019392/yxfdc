@@ -55,10 +55,17 @@ Route::group(['prefix' => 'admin', 'namespace' => 'Admin', 'as' => 'admin.'], fu
         Route::resource('articles', 'ArticlesController');
 
         // 房源属性
+        // 房源文件上传
         Route::post('fangattrs/upfile', 'FangattrsController@upfile')->name('fangattrs.upfile');
         Route::resource('fangattrs', 'FangattrsController');
 
-
+        // 房东管理
+        Route::post('fangowners/upfile', 'FangownersController@upfile')->name('fangowners.upfile');
+        Route::get('fangowners/delfile', 'FangownersController@delfile')->name('fangowners.delfile');
+        Route::get('fangowners/export/', 'FangownersController@export')->name('fangowners.export');
+        // 房东-全选删除
+        Route::delete('fangowners/delall', 'FangownersController@delall')->name('fangowners.delall');
+        Route::resource('fangowners', 'FangownersController');
     });
 
 
