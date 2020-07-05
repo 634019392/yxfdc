@@ -59,7 +59,9 @@
             @endforeach
             </tbody>
         </table>
-        {{ $roles->links() }}
+        {{-- 分页 支持搜索功能(分页会保留输入的字) --}}
+        {{ $roles->appends(request()->except('page'))->links() }}
+        {{--{{ $roles->links() }}--}}
     </div>
 
 @stop
