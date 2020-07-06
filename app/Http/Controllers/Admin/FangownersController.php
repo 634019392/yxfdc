@@ -44,6 +44,9 @@ class FangownersController extends BaseController
             'pic' => 'required',
         ]);
         $postData = $request->except('_token', 'file');
+        // 去除#
+        $postData['pic'] = trim($postData['pic'], '#');
+
         Fangowner::create($postData);
         session()->flash('success', '添加成功');
         return redirect()->route('admin.fangowners.index');
@@ -61,7 +64,7 @@ class FangownersController extends BaseController
         $imgList = explode('#', $imgs);
         array_map(function($item) {
             echo "
-            <div><img src=$item style='width: 150px;float: left;padding-top: 120px;padding-left: 60px'></div>
+            <div><img src=$item style='max-height: 180px;max-width: 180px;float: left;padding-top: 120px;padding-left: 60px'></div>
             ";
         }, $imgList);
     }
