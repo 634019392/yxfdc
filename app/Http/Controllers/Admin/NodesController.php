@@ -33,7 +33,8 @@ class NodesController extends BaseController
     public function create()
     {
         $pids_0 = Node::where('pid', 0)->get();
-        return view('admin.nodes.create', compact('pids_0'));
+        $icons = collect(config('page')['icon']);
+        return view('admin.nodes.create', compact('pids_0', 'icons'));
     }
 
     /**
@@ -52,7 +53,7 @@ class NodesController extends BaseController
         } catch (\Exception $e) {
             return ['status' => '422', 'msg' => '验证信息没通过'];
         }
-        $create_data = $request->only(['name', 'route_name', 'is_menu', 'pid']);
+        $create_data = $request->only(['name', 'route_name', 'is_menu', 'pid', 'icon']);
         Node::create($create_data);
         return ['status' => 0, 'msg' => '添加成功'];
 
@@ -78,7 +79,8 @@ class NodesController extends BaseController
     public function edit(Node $node)
     {
         $pids_0 = Node::where('pid', 0)->get();
-        return view('admin.nodes.edit', compact('node', 'pids_0'));
+        $icons = collect(config('page')['icon']);
+        return view('admin.nodes.edit', compact('node', 'pids_0', 'icons'));
     }
 
     /**
@@ -98,7 +100,7 @@ class NodesController extends BaseController
         } catch (\Exception $e) {
             return ['status' => '422', 'msg' => '验证信息没通过'];
         }
-        $update_data = $request->only('name', 'route_name', 'is_menu', 'pid');
+        $update_data = $request->only('name', 'route_name', 'is_menu', 'pid', 'icon');
         $node->update($update_data);
         return ['status' => 0, 'msg' => '修改成功'];
     }

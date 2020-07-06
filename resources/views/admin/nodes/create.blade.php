@@ -32,6 +32,21 @@
                     <input type="text" class="input-text" v-model="info.route_name">
                 </div>
             </div>
+
+            <!--图标-->
+            <div class="row cl">
+                <label class="form-label col-xs-4 col-sm-3"><span class="c-red"></span>菜单图标：</label>
+                <div class="formControls col-xs-8 col-sm-9">
+                    @foreach($icons as $k=>$i)
+                        <div class="radio-box">
+                            <input type="radio" id="{{ 'k_'.$k }}" value="{{ $i }}" v-model="info.icon">
+                            <label for="{{ 'k_'.$k }}"><i class="Hui-iconfont {{ $i }}"></i></label>
+                        </div>
+                    @endforeach
+                </div>
+            </div>
+            <!--图标End-->
+
             <div class="row cl">
                 <label class="form-label col-xs-4 col-sm-3"><span class="c-red">*</span>是否菜单：</label>
                 <div class="formControls col-xs-8 col-sm-9 skin-minimal">
@@ -66,7 +81,8 @@
                     pid: 0,
                     name: '',
                     route_name: '',
-                    is_menu: 0
+                    is_menu: 0,
+                    icon: 'Hui-iconfont-user'
                 }
             },
             methods: {
