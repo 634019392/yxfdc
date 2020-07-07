@@ -66,6 +66,14 @@ Route::group(['prefix' => 'admin', 'namespace' => 'Admin', 'as' => 'admin.'], fu
         // 房东-全选删除
         Route::delete('fangowners/delall', 'FangownersController@delall')->name('fangowners.delall');
         Route::resource('fangowners', 'FangownersController');
+
+        // 房源管理
+        // 房源文件上传
+        Route::delete('fangs/delall', 'FangsController@delall')->name('fangs.delall');
+        Route::post('fangs/upfile', 'FangsController@upfile')->name('fangs.upfile');
+        Route::get('fangs/delfile', 'FangsController@delfile')->name('fangs.delfile');
+        Route::get('fangs/city', 'FangsController@city')->name('fangs.city');
+        Route::resource('fangs', 'FangsController');
     });
 
 

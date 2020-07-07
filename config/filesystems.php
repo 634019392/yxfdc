@@ -63,6 +63,11 @@ return [
             'root' => public_path('/uploads/fangowners'),
         ],
 
+        'fangs' => [
+            'driver' => 'local',
+            'root' => public_path('/uploads/fangs'),
+        ],
+
         'public' => [
             'driver' => 'local',
             'root' => storage_path('app/public'),
