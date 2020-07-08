@@ -49,7 +49,7 @@ class FangsController extends BaseController
         $address = $fang_province . $fang_city . $fang_region . $model->fang_addr;
 
         $ser_url = config('gaode.geocode');
-        $client = new Client(['timeout'  => 5,]);
+        $client = new Client(['timeout' => 5,]);
         $url = sprintf($ser_url, config('gaode.key'), $address);
         $res = $client->get($url);
         $arr = json_decode((string)$res->getBody(), true);
@@ -114,7 +114,8 @@ class FangsController extends BaseController
     /**
      * 图片上传
      */
-    public function upfile(Request $request) {
+    public function upfile(Request $request)
+    {
         // 默认图标
         $pic = config('up.pic');
         if ($request->hasFile('file')) {
@@ -126,16 +127,29 @@ class FangsController extends BaseController
         return ['status' => 0, 'url' => $pic];
     }
 
-    public function delfile(Request $request) {
+    public function delfile(Request $request)
+    {
         if ($request->get('url')) {
             unlink(public_path($request->get('url')));
         }
         return ['status' => 0, 'msg' => '删除成功!'];
     }
 
+    // 三级联动
     public function city(Request $request)
     {
         $id = $request->id;
         return City::where('pid', $id)->get(['id', 'name']);
+    }
+
+    // 改变房源状态
+    public function changestatus(Request $request)
+    {
+        $id = $request->get('id');
+        $model = Fang::find($id);
+        $model->fang_status = !$model->fang_status;
+        $model->save();
+        $model->fang_status ? $msg = '已租' : $msg = '未租';
+        return ['status' => 0, 'msg' => $msg];
     }
 }

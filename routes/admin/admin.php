@@ -70,6 +70,7 @@ Route::group(['prefix' => 'admin', 'namespace' => 'Admin', 'as' => 'admin.'], fu
         // 房源管理
         // 房源文件上传
         Route::delete('fangs/delall', 'FangsController@delall')->name('fangs.delall');
+        Route::patch('fangs/changestatus', 'FangsController@changestatus')->name('fangs.changestatus');
         Route::post('fangs/upfile', 'FangsController@upfile')->name('fangs.upfile');
         Route::get('fangs/delfile', 'FangsController@delfile')->name('fangs.delfile');
         Route::get('fangs/city', 'FangsController@city')->name('fangs.city');

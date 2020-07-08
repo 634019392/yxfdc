@@ -40,6 +40,7 @@
                 <th width="90">业主（房东）</th>
                 <th width="50">租金</th>
                 <th width="40">朝向</th>
+                <th width="40">出租状态</th>
                 <th width="150">操作</th>
             </tr>
             </thead>
@@ -57,6 +58,17 @@
                     <td>{{ $fang->fang_owner }}</td>
                     <td>{{ $fang->fang_rent }}</td>
                     <td>{{ $fang->fang_direction }}</td>
+                    <td>
+                        @if($fang->fang_status == 0)
+                            <span data-id="{{ $fang->id }}" onclick="changeFangStatus(this, {{ $fang->id }}, 1)" class="label label-success radius" style="cursor: pointer;">
+                                未租
+                            </span>
+                        @else
+                            <span data-id="{{ $fang->id }}" onclick="changeFangStatus(this, {{ $fang->id }}, 0)" class="label label-danger radius" style="cursor: pointer;">
+                                已租
+                            </span>
+                        @endif
+                    </td>
                     <td class="f-14 user-manage">
                         <a onclick="layer_show('查看照片','{{ route('admin.fangs.show',$fang) }}',800,500)" class="label label-warning radius">查看身份证照片</a>
                         {!! $fang->editBtn('admin.fangs.edit') !!}
@@ -122,8 +134,20 @@
                 }
 
             });
+        }
 
 
+        // 更改是否已租
+        function changeFangStatus(obj, id, fang_status) {
+            let info = {id, fang_status, _token: _token};
+            $.ajax({
+                url: "{{ route('admin.fangs.changestatus') }}",
+                type: 'patch',
+                data: info,
+                success: function (ret) {
+                    $(obj).toggleClass('label-success label-danger').html(ret.msg);
+                }
+            })
         }
     </script>
 @stop
