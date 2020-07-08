@@ -59,7 +59,9 @@
                     <td>{{ $fangowner->email }}</td>
                     <td class="f-14 user-manage">
                         <a onclick="layer_show('查看照片','{{ route('admin.fangowners.show',$fangowner) }}',800,500)" class="label label-warning radius">查看身份证照片</a>
-                        {!! $fangowner->editBtn('admin.fangowners.edit') !!}
+                        <!-- 此处编辑未完善-->
+                        {{--{!! $fangowner->editBtn('admin.fangowners.edit') !!}--}}
+                        <!-- 此处编辑未完善End-->
                         {!! $fangowner->deleteBtn('admin.fangowners.destroy') !!}
                     </td>
                 </tr>
