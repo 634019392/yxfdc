@@ -3,9 +3,13 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Requests\Admin\FangRequest;
+use App\Models\Apiuser;
 use App\Models\City;
 use App\Models\Fang;
 use App\Models\Fangattr;
+use App\Models\House;
+use App\Models\Mating;
+use App\Models\Recommender;
 use GuzzleHttp\Client;
 use Illuminate\Http\Request;
 
@@ -77,15 +81,19 @@ class FangsController extends BaseController
         //
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\Fang $fang
-     * @return \Illuminate\Http\Response
-     */
+    //
     public function edit(Fang $fang)
     {
-        //
+        // 房源属性关联数据
+        $data = (new Fang())->relationData();
+
+        // 三级联动显示
+        // 市
+        $data['currentCityData'] = City::where('pid', $fang->fang_province)->get();
+        // 区\县
+        $data['currentRegionData'] = City::where('pid', $fang->fang_city)->get();
+        $data['fang'] = $fang;
+        return view('admin.fangs.edit', $data);
     }
 
     /**
@@ -97,7 +105,33 @@ class FangsController extends BaseController
      */
     public function update(Request $request, Fang $fang)
     {
-        //
+        $postData = $request->except('_token', 'file', '__method');
+        $fang->update($postData);
+
+        $fang_province = City::find($fang->fang_province)->name;
+        $fang_city = City::find($fang->fang_city)->name;
+        $fang_region = City::find($fang->fang_region)->name;
+        // 详细地址
+        $address = $fang_province . $fang_city . $fang_region . $fang->fang_addr;
+
+        $ser_url = config('gaode.geocode');
+        $client = new Client(['timeout' => 5,]);
+        $url = sprintf($ser_url, config('gaode.key'), $address);
+        $res = $client->get($url);
+        $arr = json_decode((string)$res->getBody(), true);
+
+        // 如果找到了对应经纬度，存入数据表中
+        if (count($arr['geocodes']) > 0) {
+            $locationArr = explode(',', $arr['geocodes'][0]['location']);
+            $fang->update([
+                'longitude' => $locationArr[0],
+                'latitude' => $locationArr[1]
+            ]);
+        }
+
+
+        // 跳转
+        return redirect(route('admin.fangs.index'))->with('success', '修改成功');
     }
 
     /**
@@ -129,7 +163,28 @@ class FangsController extends BaseController
 
     public function delfile(Request $request)
     {
-        if ($request->get('url')) {
+        if ($request->get('url') && $request->get('status') == 'edit') {
+            $url = $request->get('url');
+            $fang = Fang::find($request->id);
+            $img = trim($fang->fang_pic, '#');
+            $items = explode('#', $img);
+
+            unlink(public_path($url));
+            $val = [];
+            foreach ($items as $item) {
+                if ($url == $item) {
+                    continue;
+                }
+                $val[] = $item;
+            }
+            if (!empty($val)) {
+                $chang_val = implode('#', $val);
+            } else {
+                $chang_val = '';
+            }
+            $fang->fang_pic = $chang_val;
+            $fang->save();
+        } elseif ($request->get('url')) {
             unlink(public_path($request->get('url')));
         }
         return ['status' => 0, 'msg' => '删除成功!'];

@@ -41,10 +41,14 @@ return [
             'provider' => 'users',
         ],
 
+        'apiweb' => [
+            'driver' => 'session',
+            'provider' => 'apiusers',
+        ],
+
         'api' => [
-            'driver' => 'token',
-            'provider' => 'users',
-            'hash' => false,
+            'driver' => 'passport',
+            'provider' => 'apiusers',
         ],
     ],
 
@@ -69,6 +73,11 @@ return [
         'users' => [
             'driver' => 'eloquent',
             'model' => App\Models\User::class,
+        ],
+
+        'apiusers' => [
+            'driver' => 'eloquent',
+            'model' => App\Models\Apiuser::class,
         ],
 
         // 'users' => [

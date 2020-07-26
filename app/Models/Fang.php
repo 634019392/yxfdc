@@ -17,10 +17,21 @@ class Fang extends Base
         $this->attributes['fang_config'] = implode(',', $value);
     }
 
+    // 房源配套访问器
+    public function getFangConfigAttribute($value) {
+        return explode(',', $this->attributes['fang_config']);
+    }
+
     // 房源图片修改器
     public function setFangPicAttribute($value)
     {
         $this->attributes['fang_pic'] = trim($value, '#');
+    }
+
+    // 房源图片配置
+    public function getImagesAttribute() {
+        $imgs = explode('#', $this->attributes['fang_pic']);
+        return $imgs;
     }
 
     public function relationData()

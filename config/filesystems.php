@@ -68,6 +68,12 @@ return [
             'root' => public_path('/uploads/fangs'),
         ],
 
+        // 身份证上传
+        'card' => [
+            'driver' => 'local',
+            'root' => public_path('/uploads/cards'),
+        ],
+
         'public' => [
             'driver' => 'local',
             'root' => storage_path('app/public'),
