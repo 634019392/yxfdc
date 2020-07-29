@@ -35,7 +35,7 @@ class HouseRequest extends FormRequest
             'mating.floor_space' => 'required',
             'mating.property_right' => 'required|integer|between:1,100',
             'mating.greening' => 'required|integer|between:1,100',
-            'mating.plot' => 'required|integer|between:1,100',
+            'mating.plot' => 'required|numeric|between:1,100',
         ];
     }
 

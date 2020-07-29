@@ -44,3 +44,26 @@ return [
 $ php artisan migrate
 $ php artisan passport:install
 ```
+
+#####6.数据库配置
+users数据：
+```
+|  id   | role_id | username | password |
+| ----- | ------- | -------- | -------- |
+|   1   |    1    |    ll    |          |
+```
+roles
+```
+|  id   |   name   |
+| ----- | -------- |
+|   1   |   开发者  |
+```
+role_node
+```
+| role_id | node_id |
+| ------- | ------- |
+|    1    |    1    |
+```
+nodes
+![avatar](http://w20.top/nodes.png)
+表中需要填充数据

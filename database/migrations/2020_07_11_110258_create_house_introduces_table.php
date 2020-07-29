@@ -20,7 +20,7 @@ class CreateHouseIntroducesTable extends Migration
             $table->foreign('house_id')->references('id')->on('houses')->onDelete('cascade');
 
             $table->timestamp('open_time')->default('1999-01-01 23:59:59')->comment('开盘日期');
-            $table->string('feature', 400)->default('')->comment('楼盘特色');
+            $table->text('feature')->default('')->comment('楼盘特色');
             $table->string('type', 20)->default('')->comment('产品类型:高层，洋房，别墅，公寓');
             $table->string('decor', 250)->default('')->comment('装修情况:带装修,毛坯');
             $table->integer('floor_space')->default(1)->comment('占地面积');
