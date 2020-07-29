@@ -1,14 +1,17 @@
 <?php
+
 use Qiniu\Auth;
 use Qiniu\Storage\UploadManager;
 
-function strtotime13() {
+function strtotime13()
+{
     list($t1, $t2) = explode(' ', microtime());
-    return (float)sprintf('%.0f',(floatval($t1)+floatval($t2))*1000);
+    return (float)sprintf('%.0f', (floatval($t1) + floatval($t2)) * 1000);
 }
 
 // 上传图片到七牛云
-function qiniu_update($filePath) {
+function qiniu_update($filePath)
+{
     $accessKey = config('qiniu.accessKey');
     $secretKey = config('qiniu.secretKey');
     $auth = new Auth($accessKey, $secretKey);
@@ -30,6 +33,23 @@ function qiniu_update($filePath) {
     unlink(public_path($filePath));
 
     return $qiniu_res;
+}
+
+// 删除七牛云中的图片
+function qiniu_del($filePath)
+{
+    $accessKey = config('qiniu.accessKey');
+    $secretKey = config('qiniu.secretKey');
+    $bucket = config('qiniu.bucket');
+    $key = basename($filePath);
+    $days = 1;
+    $auth = new Auth($accessKey, $secretKey);
+    $config = new \Qiniu\Config();
+    $bucketManager = new \Qiniu\Storage\BucketManager($auth, $config);
+    $err = $bucketManager->deleteAfterDays($bucket, $key, $days);
+    if ($err) {
+        print_r($err);
+    }
 }
 
 function treeLevel($data, $pid = 0, $html = '--', $level = 0)

@@ -74,6 +74,12 @@ return [
             'root' => public_path('/uploads/cards'),
         ],
 
+        // 无论什么上传
+        'images' => [
+            'driver' => 'local',
+            'root' => public_path('/uploads/images'),
+        ],
+
         'public' => [
             'driver' => 'local',
             'root' => storage_path('app/public'),

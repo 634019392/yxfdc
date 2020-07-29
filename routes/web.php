@@ -16,3 +16,7 @@ Route::get('/', function () {
 });
 
 include base_path('routes/admin/admin.php');
+
+Route::post('admin/upfile', 'PhotosController@upfile')->name('admin.upfile');
+Route::post('admin/delfile', 'PhotosController@delfile')->name('admin.delfile');
+Route::post('admin/delfilesql', 'PhotosController@delfilesql')->name('admin.delfilesql');

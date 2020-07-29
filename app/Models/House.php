@@ -1,9 +1,12 @@
 <?php
 
 namespace App\Models;
+use App\Models\Traits\Btn;
 
 class House extends Base
 {
+    use Btn;
+
     public function buyers()
     {
         return $this->belongsToMany(Buyer::class, 'recommenders', 'house_id', 'buyer_id');
@@ -16,7 +19,7 @@ class House extends Base
     }
 
     // 1对多 户型图
-    public function houseFloor()
+    public function houseFloors()
     {
         return $this->hasMany(HouseFloor::class);
     }

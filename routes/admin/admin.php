@@ -75,6 +75,9 @@ Route::group(['prefix' => 'admin', 'namespace' => 'Admin', 'as' => 'admin.'], fu
         Route::get('fangs/delfile', 'FangsController@delfile')->name('fangs.delfile');
         Route::get('fangs/city', 'FangsController@city')->name('fangs.city');
         Route::resource('fangs', 'FangsController');
+
+        // 楼盘管理
+        Route::resource('houses', 'HousesController');
     });
 
 

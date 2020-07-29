@@ -20,7 +20,7 @@ class CreateHousesTable extends Migration
             $table->string('address', 200)->default('')->comment('项目地址');
             $table->string('img', 255)->default('')->comment('项目封面图片');
             $table->string('phone', 15)->default('')->comment('售楼热线');
-            $table->string('reference', 50)->default('')->comment('参考价格');
+            $table->string('reference', 50)->nullable()->comment('参考价格');
             $table->timestamps();
         });
     }

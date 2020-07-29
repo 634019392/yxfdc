@@ -30,9 +30,8 @@ class HousesController extends Controller
     public function show(Request $request)
     {
         $house_id = $request->get('house_id');
-        $house = House::find($house_id)->load(['mating','houseFloor'])->toArray();
+        $house = House::find($house_id)->load(['mating','houseFloors'])->toArray();
 
-        return $house;
         return response()->json(['status' => 1000, 'data' => $house], 200);
     }
 }
