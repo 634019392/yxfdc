@@ -25,7 +25,7 @@ class AddIconToNodesTable extends Migration
      */
     public function down()
     {
-        Schema::table('Models/Node', function (Blueprint $table) {
+        Schema::table('nodes', function (Blueprint $table) {
             $table->dropColumn('icon');
         });
     }

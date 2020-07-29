@@ -34,6 +34,6 @@ class CreateFangOwnersTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('fang_owners');
+        Schema::dropIfExists('fangowners');
     }
 }
