@@ -3,12 +3,13 @@
 ```base
 $ composer install
 ```
+#####2.阿里云短信配置config中alibaba accessKeyId和accessSecret
 
-#####2.小程序配置config中swechat appid和secret
+#####3.小程序配置config中swechat appid和secret
 
-#####3.七牛配置config中qiniu 的密钥
+#####4.七牛配置config中qiniu 的密钥
 
-#####4.passport配置
+#####5.passport配置
 ```base
 $ php artisan migrate
 $ php artisan passport:install
