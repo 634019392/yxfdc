@@ -94,7 +94,7 @@
             <div class="row cl">
                 <label class="form-label col-xs-4 col-sm-3"><span class="c-red">*</span>开盘日期：</label>
                 <div class="formControls col-xs-8 col-sm-9">
-                    <input type="text" onfocus="WdatePicker({startDate:'2020-05-01'})" class="input-text Wdate" style="width:180px;" name="mating[open_time]" value="{{ $data->mating->open_time }}" autocomplete="off"/>
+                    <input type="text" class="input-text" name="mating[open_time]" value="{{ $data->mating->open_time }}" />
                 </div>
             </div>
 
@@ -157,7 +157,7 @@
             <div class="row cl">
                 <label class="form-label col-xs-4 col-sm-3"><span class="c-red">*</span>交付日期：</label>
                 <div class="formControls col-xs-8 col-sm-9">
-                    <input type="text" onfocus="WdatePicker({startDate:'2020-05-01'})" class="input-text Wdate" style="width:180px;" name="mating[delivery_time]" value="{{ $data->mating->delivery_time }}" autocomplete="off"/>
+                    <input type="text" class="input-text" name="mating[delivery_time]" value="{{ $data->mating->delivery_time }}" />
                 </div>
             </div>
 

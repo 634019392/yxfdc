@@ -94,17 +94,20 @@ class HousesController extends BaseController
         $postArr = $request->all();
         $postArr['img'] = $postArr['image_pic'];//ps: 此处前端传过来的不是img名称需要转换一下
         $postMating = $postArr['mating'];
-        $postFloorPlan = $postArr['foolr_plan'];
         $postHouse = collect($postArr)->except(['image_pic', '_token', '_method', 'file', 'mating', 'foolr_plan'])->toArray();
         $house->update($postHouse);// 1.更新house数据
         HouseIntroduce::updateOrCreate(['house_id' => $house->id], $postMating);// 2.查找出楼盘参数模型,有则更新否则创建
 
-        foreach ($postFloorPlan as $item) {
-            if (array_key_exists('id',$item)) {
-                HouseFloor::updateOrCreate(['id' => $item['id']], $item);
-            } else {
-                $item['house_id'] = $house->id;
-                HouseFloor::create($item);
+        // 3.存在则更新或新增户型图信息
+        if ($request->has('foolr_plan')) {
+            $postFloorPlan = $postArr['foolr_plan'];
+            foreach ($postFloorPlan as $item) {
+                if (array_key_exists('id',$item)) {
+                    HouseFloor::updateOrCreate(['id' => $item['id']], $item);
+                } else {
+                    $item['house_id'] = $house->id;
+                    HouseFloor::create($item);
+                }
             }
         }
 
