@@ -143,7 +143,7 @@ class BokersController extends Controller
             $user->is_phone_auth = '1';
             $user->id_card = $id_card;
             $user->save();
-            return response()->json(['status' => 1000, 'msg' => '认证成功'], 200);
+            return response()->json(['status' => 1000, 'msg' => '认证成功', 'data' => ['is_phone_auth' => 1]], 200);
         } else {
             return response()->json(['status' => 1005, 'msg' => '验证码不正确或验证码超时'], 412);
         }
