@@ -28,6 +28,7 @@ Route::group(['prefix'=>'v1','namespace'=>'Api'],function (){
     // 楼盘详情
     Route::get('houses/show', 'HousesController@show');
 
+    Route::get('advs/img', 'AdvsController@img');
 });
 
 // 请求验证
