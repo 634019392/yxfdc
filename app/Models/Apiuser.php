@@ -83,7 +83,8 @@ class Apiuser extends AuthUser
             $attr = array_count_values($house_params['judge']);
             if (!isset($attr['pass']) || $attr['pass'] == 0) {
                 // 所有点的楼盘都存在则给与前端提示
-                return ['status' => 412, 'msg' => '所选楼盘都已经被推荐过了'];
+                return ['status' => 412, 'msg' => '该手机号已经存在推荐楼盘中'];
+//                return ['status' => 412, 'msg' => '所选楼盘都已经被推荐过了'];
             }
 
             foreach ($house_params['id'] as $house_id) {
