@@ -78,6 +78,10 @@ Route::group(['prefix' => 'admin', 'namespace' => 'Admin', 'as' => 'admin.'], fu
 
         // 楼盘管理
         Route::resource('houses', 'HousesController');
+
+        // 广告管理
+        // 轮播图管理
+        Route::resource('advimgs', 'AdvimgsController');
     });
 
 

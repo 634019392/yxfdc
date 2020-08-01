@@ -29,4 +29,14 @@ trait Btn
             return '<a href="' . route($route_name, $this) . '" class="label label-danger radius">删除</a>';
         }
     }
+
+    // 带弹框class的删除
+    public function destroyBtn($route_name)
+    {
+        if (auth()->user()->username != config('rbac.super') && !in_array($route_name, request()->admin_auth)) {
+            return '';
+        } else {
+            return '<a href="' . route($route_name, $this) . '" class="label label-danger radius delbtn">删除</a>';
+        }
+    }
 }
