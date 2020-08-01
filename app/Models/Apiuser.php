@@ -105,15 +105,19 @@ class Apiuser extends AuthUser
     // 调用此方法$params:1全数组模式,后期看情况改动
     public function centre_info()
     {
-        foreach ($this->apiusers as $recommender) {
-            $val1 = $recommender->house()->first();
-            $val2 = $recommender->buyer()->first();
-            if ($val1 && $val2) {
-                $recommender->house_arr = $val1->toArray();
-                $recommender->buyer_arr = $val2->toArray();
+        if ($this->apiusers->count() > 0) {
+            foreach ($this->apiusers as $recommender) {
+                $val1 = $recommender->house()->first();
+                $val2 = $recommender->buyer()->first();
+                if ($val1 && $val2) {
+                    $recommender->house_arr = $val1->toArray();
+                    $recommender->buyer_arr = $val2->toArray();
+                }
             }
+            $this->apiusers = $recommender;
+        } else {
+            $this->apiusers = '';
         }
-        $this->apiusers = $recommender;
         return $this->toArray();
     }
 
