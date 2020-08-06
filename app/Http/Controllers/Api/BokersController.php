@@ -32,6 +32,8 @@ class BokersController extends Controller
         // 发送验证码
         $ak = config('alibaba.accessKeyId');
         $sk = config('alibaba.accessSecret');
+        $sn = config('alibaba.SignName');
+        $tc = config('alibaba.TemplateCode');
         $code = random_int(100000, 999999);
         $json_code = json_encode(['code' => $code]);
 
@@ -51,8 +53,8 @@ class BokersController extends Controller
                     'query' => [
                         'RegionId' => "cn-hangzhou",
                         'PhoneNumbers' => $phone,
-                        'SignName' => "老阳说房",
-                        'TemplateCode' => "SMS_196653354",
+                        'SignName' => $sn,
+                        'TemplateCode' => $tc,
                         'TemplateParam' => $json_code,
                     ],
                 ])

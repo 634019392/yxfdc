@@ -10,6 +10,8 @@ $ composer install
 return [
     'accessKeyId' => '',
     'accessSecret' => '',
+    'SignName' => '',
+    'TemplateCode' => '',
 ];
 ```
 
