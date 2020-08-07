@@ -135,6 +135,9 @@ class BokersController extends Controller
             return response()->json(['status' => 1005, 'msg' => '已经认证无须重复认证'], 204);
         }
         $user_phone_node = $user->phone_node;//格式为 验证码#时间戳
+        if ($user_phone_node == '') {
+            return response()->json(['status' => 1005, 'msg' => '请先核实号码再点击发送短信'], 412);
+        }
         list($mysql_phone_node, $mysql_time, $mysql_phone) = explode('#', $user_phone_node);
         // 获取的验证码和数据库中的相同且时间没有超过5分钟
         if ($mysql_phone_node == $phone_node && $mysql_phone == $phone && time() < ($mysql_time + 60 * 5)) {
@@ -206,7 +209,8 @@ class BokersController extends Controller
     }
 
     // 我的客户
-    public function my_client(Request $request) {
+    public function my_client(Request $request)
+    {
         $openid = $request->get('openid');
         $ret = Apiuser::with('apiusers')
             ->where('openid', $openid)
