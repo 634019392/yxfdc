@@ -14,6 +14,14 @@ class HousesController extends Controller
     public function index(Request $request)
     {
         $houses = House::all();
+        foreach ($houses as $k => $item) {
+            if ($item['tag']) {
+                $item['tag'] = explode('#', $item['tag']);
+            } else {
+                $item['tag'] = '';
+            }
+        }
+
         return response()->json(['status' => 1000, 'data' => $houses], 200);
     }
 
@@ -31,6 +39,11 @@ class HousesController extends Controller
     {
         $house_id = $request->get('house_id');
         $house = House::find($house_id)->load(['mating','houseFloors'])->toArray();
+        if ($house['tag']) {
+            $house['tag'] = explode('#', $house['tag']);
+        } else {
+            $house['tag'] = '';
+        }
 
         return response()->json(['status' => 1000, 'data' => $house], 200);
     }

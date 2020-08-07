@@ -69,6 +69,13 @@
             </div>
 
             <div class="row cl">
+                <label class="form-label col-xs-4 col-sm-3"><span class="c-red">*</span>标签(以#分割,最多2个#,也就是3个标签)：</label>
+                <div class="formControls col-xs-8 col-sm-9">
+                    <input type="text" class="input-text" name="tag" value="{{ old('tag') }}">
+                </div>
+            </div>
+
+            <div class="row cl">
                 <label class="form-label col-xs-4 col-sm-3"><span style="font-size: x-large">配套信息</span></label>
             </div>
 
