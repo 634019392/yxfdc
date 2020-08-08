@@ -115,6 +115,13 @@
             </div>
 
             <div class="row cl">
+                <label class="form-label col-xs-4 col-sm-3"><span class="c-red">*</span>建筑面积：</label>
+                <div class="formControls col-xs-8 col-sm-9">
+                    <input type="number" class="input-text" name="mating[covered_area]" value="{{ old('covered_area') }}" onchange="this.value=this.value.replace(/\D|^0/g,'')">
+                </div>
+            </div>
+
+            <div class="row cl">
                 <label class="form-label col-xs-4 col-sm-3"><span class="c-red">*</span>产权：</label>
                 <div class="formControls col-xs-8 col-sm-9">
                     <input type="number" class="input-text" name="mating[property_right]" value="{{ old('property_right') }}" onchange="this.value=this.value.replace(/\D|^0/g,'')">

@@ -134,6 +134,13 @@
             </div>
 
             <div class="row cl">
+                <label class="form-label col-xs-4 col-sm-3"><span class="c-red">*</span>建筑面积：</label>
+                <div class="formControls col-xs-8 col-sm-9">
+                    <input type="number" class="input-text" name="mating[covered_area]" value="{{ $data->mating->covered_area }}" onchange="this.value=this.value.replace(/\D|^0/g,'')">
+                </div>
+            </div>
+
+            <div class="row cl">
                 <label class="form-label col-xs-4 col-sm-3"><span class="c-red">*</span>产权：</label>
                 <div class="formControls col-xs-8 col-sm-9">
                     <input type="number" class="input-text" name="mating[property_right]" value="{{ $data->mating->property_right }}" onchange="this.value=this.value.replace(/\D|^0/g,'')">
@@ -240,7 +247,7 @@
                         <div class="row cl">
                             <label class="form-label col-xs-4 col-sm-3"><span class="c-red">*</span>描述3：</label>
                             <div class="formControls col-xs-8 col-sm-9">
-                                <input type="text" class="input-text" name="foolr_plan[{{$k}}][floor_row3]" value="{{ $floor_plan->floor_row2 }}">
+                                <input type="text" class="input-text" name="foolr_plan[{{$k}}][floor_row3]" value="{{ $floor_plan->floor_row3 }}">
                             </div>
                         </div>
                     @endforeach
