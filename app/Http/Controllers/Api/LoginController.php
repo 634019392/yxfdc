@@ -3,12 +3,16 @@
 namespace App\Http\Controllers\Api;
 
 use App\Models\Apiuser;
+use Carbon\Carbon;
 use GuzzleHttp\Client;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Traits\PassportToken;
 
 class LoginController extends Controller
 {
+    use PassportToken;
+
     // 小程序登录，如果不存在则创建
     public function swxlogin(Request $request)
     {
@@ -36,7 +40,11 @@ class LoginController extends Controller
             $token_expires = ((int)strtotime(config('swechat.expires'))) * 1000;
 
             if ($userModel) {
-                $token = $userModel->createToken('api')->accessToken;
+                // 个人令牌永久有效的问题优化
+//                $token = $userModel->createToken('api')->accessToken;
+                $result = $this->getBearerTokenByUser($userModel, '1', false);
+                $token = $result['access_token'];
+
                 // 此步骤passport7.4版本可以忽略
                 $userModel->api_token = $token;
                 $userModel->save();
@@ -50,7 +58,12 @@ class LoginController extends Controller
                     'openid' => $openid
                 ];
                 $newModel = Apiuser::create($userData);
-                $token = $newModel->createToken('api')->accessToken;
+
+                // 个人令牌永久有效的问题优化
+//                $token = $newModel->createToken('api')->accessToken;
+                $result = $this->getBearerTokenByUser($newModel, '1', false);
+                $token = $result['access_token'];
+
                 $newModel->api_token = $token;
                 $newModel->save();
                 // http状态码201为创建完成
