@@ -95,6 +95,7 @@ return array(
     'App\\Http\\Controllers\\Admin\\AdvimgsController' => $baseDir . '/app/Http/Controllers/Admin/AdvimgsController.php',
     'App\\Http\\Controllers\\Admin\\ArticlesController' => $baseDir . '/app/Http/Controllers/Admin/ArticlesController.php',
     'App\\Http\\Controllers\\Admin\\BaseController' => $baseDir . '/app/Http/Controllers/Admin/BaseController.php',
+    'App\\Http\\Controllers\\Admin\\BuyersController' => $baseDir . '/app/Http/Controllers/Admin/BuyersController.php',
     'App\\Http\\Controllers\\Admin\\FangattrsController' => $baseDir . '/app/Http/Controllers/Admin/FangattrsController.php',
     'App\\Http\\Controllers\\Admin\\FangownersController' => $baseDir . '/app/Http/Controllers/Admin/FangownersController.php',
     'App\\Http\\Controllers\\Admin\\FangsController' => $baseDir . '/app/Http/Controllers/Admin/FangsController.php',

@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Carbon\Carbon;
 use Laravel\Passport\HasApiTokens;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as AuthUser;
@@ -65,7 +66,7 @@ class Apiuser extends AuthUser
             }
             $new_user = Buyer::create($buyer_arr);
             foreach ($house_arr as $house_id) {
-                $this->buyers()->attach($new_user->id, ['house_id' => $house_id]);
+                $this->buyers()->attach($new_user->id, ['house_id' => $house_id, 'protect_time' => Carbon::now()->addDays(30)]);
             }
             return ['status' => 200, 'msg' => '推荐成功!'];
         } else {

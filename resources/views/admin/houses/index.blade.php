@@ -77,6 +77,7 @@
             @endforeach
             </tbody>
         </table>
+        {{ $houses->appends(Request::except('page'))->links() }}
     </div>
 
 @stop

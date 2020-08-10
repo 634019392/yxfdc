@@ -9,6 +9,7 @@ class BaseController extends Controller
 {
     protected $pagesize;
 
+    // paginate
     public function __construct()
     {
         $this->pagesize = config('page.pagesize');

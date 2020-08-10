@@ -786,6 +786,7 @@ class ComposerStaticInitcd4e1ad64e27965ab5c577a389864cac
         'App\\Http\\Controllers\\Admin\\AdvimgsController' => __DIR__ . '/../..' . '/app/Http/Controllers/Admin/AdvimgsController.php',
         'App\\Http\\Controllers\\Admin\\ArticlesController' => __DIR__ . '/../..' . '/app/Http/Controllers/Admin/ArticlesController.php',
         'App\\Http\\Controllers\\Admin\\BaseController' => __DIR__ . '/../..' . '/app/Http/Controllers/Admin/BaseController.php',
+        'App\\Http\\Controllers\\Admin\\BuyersController' => __DIR__ . '/../..' . '/app/Http/Controllers/Admin/BuyersController.php',
         'App\\Http\\Controllers\\Admin\\FangattrsController' => __DIR__ . '/../..' . '/app/Http/Controllers/Admin/FangattrsController.php',
         'App\\Http\\Controllers\\Admin\\FangownersController' => __DIR__ . '/../..' . '/app/Http/Controllers/Admin/FangownersController.php',
         'App\\Http\\Controllers\\Admin\\FangsController' => __DIR__ . '/../..' . '/app/Http/Controllers/Admin/FangsController.php',

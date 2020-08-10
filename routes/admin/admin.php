@@ -82,6 +82,13 @@ Route::group(['prefix' => 'admin', 'namespace' => 'Admin', 'as' => 'admin.'], fu
         // 广告管理
         // 轮播图管理
         Route::resource('advimgs', 'AdvimgsController');
+
+        // 全民营销
+        // 客户列表
+        Route::get('buyers/index', 'BuyersController@index')->name('buyers.index');
+        // 客户状态编辑
+        Route::get('buyers/{recommender}/edit', 'BuyersController@edit')->name('buyers.edit');
+        Route::put('buyers/{recommender}', 'BuyersController@update')->name('buyers.update');
     });
 
 

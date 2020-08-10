@@ -17,7 +17,7 @@ class HousesController extends BaseController
      */
     public function index()
     {
-        $houses = House::all();
+        $houses = House::paginate($this->pagesize);
         return view('admin.houses.index', compact('houses'));
     }
 
