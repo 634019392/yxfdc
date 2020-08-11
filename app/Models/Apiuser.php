@@ -109,6 +109,10 @@ class Apiuser extends AuthUser
     {
         if ($this->apiusers->count() > 0) {
             foreach ($this->apiusers as $recommender) {
+                $date1 = Carbon::now();
+                $date2 = Carbon::parse($recommender->protect_time);
+                $diff = $date1->diffInDays($date2);
+                $recommender->remain_day = $diff;
                 $val1 = $recommender->house()->first();
                 $val2 = $recommender->buyer()->first();
                 if ($val1 && $val2) {
