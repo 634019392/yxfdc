@@ -53,6 +53,7 @@ class AdvimgsController extends BaseController
             if (!$postArr['height']) {
                 $postArr['height'] = 220;
             }
+            $saveArr['skip_page'] = $postArr['skip_page'];
             $saveArr['slideshow'] = sprintf($img_url, $postArr['mode'], $postArr['width'], $postArr['height']);
 
             Advimg::create($saveArr);
@@ -128,6 +129,7 @@ class AdvimgsController extends BaseController
             $saveArr['slideshow'] = sprintf($img_url, $postArr['mode'], $postArr['width'], $postArr['height']);
 
             $advimg->slideshow = $saveArr['slideshow'];
+            $advimg->skip_page = $postArr['skip_page'];
             $advimg->save();
 
         }

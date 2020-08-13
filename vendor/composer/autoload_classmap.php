@@ -148,6 +148,7 @@ return array(
     'App\\Providers\\BroadcastServiceProvider' => $baseDir . '/app/Providers/BroadcastServiceProvider.php',
     'App\\Providers\\EventServiceProvider' => $baseDir . '/app/Providers/EventServiceProvider.php',
     'App\\Providers\\RouteServiceProvider' => $baseDir . '/app/Providers/RouteServiceProvider.php',
+    'App\\Traits\\PassportToken' => $baseDir . '/app/Traits/PassportToken.php',
     'ArticlesTableSeeder' => $baseDir . '/database/seeds/ArticlesTableSeeder.php',
     'Barryvdh\\LaravelIdeHelper\\Alias' => $vendorDir . '/barryvdh/laravel-ide-helper/src/Alias.php',
     'Barryvdh\\LaravelIdeHelper\\Console\\EloquentCommand' => $vendorDir . '/barryvdh/laravel-ide-helper/src/Console/EloquentCommand.php',
