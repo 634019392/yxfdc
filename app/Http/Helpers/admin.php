@@ -9,6 +9,16 @@ function strtotime13()
     return (float)sprintf('%.0f', (floatval($t1) + floatval($t2)) * 1000);
 }
 
+// 更好的dda函数
+function dda($model)
+{
+    if (method_exists($model, 'toArray')) {
+        dd($model->toArray());
+    } else {
+        dd($model);
+    }
+}
+
 // 上传图片到七牛云
 function qiniu_update($filePath)
 {
