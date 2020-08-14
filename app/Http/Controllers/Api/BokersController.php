@@ -178,6 +178,9 @@ class BokersController extends Controller
         if (!$card_alert_six) {
             return response()->json(['status' => 1005, 'msg' => '身份证后六位必填'], 412);
         }
+        if (!$age) {
+            $age = 0;
+        }
         if (!$truename) {
             return response()->json(['status' => 1005, 'msg' => '姓名不能为空'], 412);
         }

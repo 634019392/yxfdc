@@ -90,7 +90,7 @@ class Apiuser extends AuthUser
 
             foreach ($house_params['id'] as $house_id) {
                 if ($house_id) {
-                    $this->buyers()->attach($buyer->id, ['house_id' => $house_id]);
+                    $this->buyers()->attach($buyer->id, ['house_id' => $house_id, 'protect_time' => Carbon::now()->addDays(30)]);
                 }
             }
             return ['status' => 200, 'msg' => '推荐成功!'];
