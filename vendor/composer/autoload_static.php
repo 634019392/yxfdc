@@ -839,6 +839,7 @@ class ComposerStaticInitcd4e1ad64e27965ab5c577a389864cac
         'App\\Providers\\BroadcastServiceProvider' => __DIR__ . '/../..' . '/app/Providers/BroadcastServiceProvider.php',
         'App\\Providers\\EventServiceProvider' => __DIR__ . '/../..' . '/app/Providers/EventServiceProvider.php',
         'App\\Providers\\RouteServiceProvider' => __DIR__ . '/../..' . '/app/Providers/RouteServiceProvider.php',
+        'App\\Traits\\PassportToken' => __DIR__ . '/../..' . '/app/Traits/PassportToken.php',
         'ArticlesTableSeeder' => __DIR__ . '/../..' . '/database/seeds/ArticlesTableSeeder.php',
         'Barryvdh\\LaravelIdeHelper\\Alias' => __DIR__ . '/..' . '/barryvdh/laravel-ide-helper/src/Alias.php',
         'Barryvdh\\LaravelIdeHelper\\Console\\EloquentCommand' => __DIR__ . '/..' . '/barryvdh/laravel-ide-helper/src/Console/EloquentCommand.php',

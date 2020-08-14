@@ -31,6 +31,13 @@
             </div>
 
             <div class="row cl">
+                <label class="form-label col-xs-4 col-sm-3">小程序跳转页面：</label>
+                <div class="formControls col-xs-8 col-sm-9">
+                    <input type="text" class="input-text" name="skip_page" value="{{ old('skip_page') }}">
+                </div>
+            </div>
+
+            <div class="row cl">
                 <label class="form-label col-xs-4 col-sm-3"><span class="c-red">*</span>图片宽：</label>
                 <div class="formControls col-xs-8 col-sm-9">
                     <input type="text" class="input-text" name="width" value="{{ old('width') }}">
