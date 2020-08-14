@@ -69,3 +69,10 @@ role_node
 nodes
 ![avatar](http://w20.top/nodes.png)
 表中需要填充数据
+
+#####6.服务器定时任务配置
+```bash
+$ crontab -e
+# 定时任务中加入，CTRL+O保存，CTRL+X退出
+* * * * * cd /path-to-your-project && php artisan schedule:run >> /dev/null 2>&1
+```
