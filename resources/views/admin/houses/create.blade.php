@@ -195,6 +195,13 @@
             <span class="foolr_plan_list"></span>
 
             <div class="row cl">
+                <label class="form-label col-xs-4 col-sm-3"><span style="font-size: x-large">项目概要</span></label>
+                <input class="btn btn-success radius btn-outline-plan" type="button" style="margin-top: 10px;margin-left: 13px" value="新增">
+            </div>
+            <input type="hidden" id="add_outline_num" value="0">
+            <span class="outline_pic_list"></span>
+
+            <div class="row cl">
                 <div class="col-xs-8 col-sm-9 col-xs-offset-4 col-sm-offset-3">
                     <input class="btn btn-primary radius" type="submit" style="margin-top: 10%" value="添加">
                 </div>
@@ -343,6 +350,7 @@
             })
         }
 
+        // 户型图添加按钮
         $('.btn-foolr-plan').click(function (ret) {
             let obj = $('#add_num');
             let num = obj.val();
@@ -355,26 +363,26 @@
                     <div id="picker_${num}">上传</div>
                 </div>
                 <div class="formControls col-xs-6 col-sm-7">
-                    <input type="hidden" name="foolr_plan[${num}][floor_plan]" id="img_url_${num}"/>
+                    <input type="hidden" name="house_floors[${num}][floor_plan]" id="img_url_${num}"/>
                     <div id="img_show_${num}"></div>
                 </div>
             </div>
             <div class="row cl">
                 <label class="form-label col-xs-4 col-sm-3"><span class="c-red">*</span>描述1：</label>
                 <div class="formControls col-xs-8 col-sm-9">
-                    <input type="text" class="input-text" name="foolr_plan[${num}][floor_row1]" value="{{ old('row1') }}">
+                    <input type="text" class="input-text" name="house_floors[${num}][floor_row1]" value="{{ old('row1') }}">
                 </div>
             </div>
             <div class="row cl">
                 <label class="form-label col-xs-4 col-sm-3"><span class="c-red">*</span>描述2：</label>
                 <div class="formControls col-xs-8 col-sm-9">
-                    <input type="text" class="input-text" name="foolr_plan[${num}][floor_row2]" value="{{ old('row2') }}">
+                    <input type="text" class="input-text" name="house_floors[${num}][floor_row2]" value="{{ old('row2') }}">
                 </div>
             </div>
             <div class="row cl">
                 <label class="form-label col-xs-4 col-sm-3"><span class="c-red">*</span>描述3：</label>
                 <div class="formControls col-xs-8 col-sm-9">
-                    <input type="text" class="input-text" name="foolr_plan[${num}][floor_row3]" value="{{ old('row3') }}">
+                    <input type="text" class="input-text" name="house_floors[${num}][floor_row3]" value="{{ old('row3') }}">
                 </div>
             </div>
             `;
@@ -416,19 +424,83 @@
                 let html = `
             <span style="position: relative;margin-right: 30px">
                 <img src="${ret.url}" style="width: 100px;height: 100px;" />
-                <strong onclick="delimg(this, '${ret.url}', '${num}')" style="position: absolute;color: #1F1F1F;left: 110px;cursor:pointer;">X</strong>
+                <strong onclick="delimg(this, '${ret.url}', '${num}', '#img_url_')" style="position: absolute;color: #1F1F1F;left: 110px;cursor:pointer;">X</strong>
             </span>
             `;
                 imglist.append(html);
             });
         })
 
-        function delimg(obj, url, num) {
+        // 项目概要添加按钮
+        $('.btn-outline-plan').click(function (ret) {
+            let obj = $('#add_outline_num');
+            let num = obj.val();
+            obj.val(parseInt(num) + 1);
+
+            let html = `
+            <div class="row cl">
+                <label class="form-label col-xs-4 col-sm-3"><span class="c-red">*</span>项目概要：</label>
+                <div class="formControls col-xs-2 col-sm-2">
+                    <div id="picker_outline_${num}">上传</div>
+                </div>
+                <div class="formControls col-xs-6 col-sm-7">
+                    <input type="hidden" name="house_outlines[${num}][outline_pic]" id="img_url_outline_${num}"/>
+                    <div id="img_show_outline_${num}"></div>
+                </div>
+            </div>
+            `;
+            $('.outline_pic_list').append(html);
+
+            // 初始化Web Uploader
+            var uploader_ = WebUploader.create({
+                // 选完文件后，是否自动上传
+                auto: true,
+                // swf文件路径
+                swf: '/webuploader/Uploader.swf',
+                // 文件接收服务端 上传PHP的代码
+                server: '{{ route('admin.upfile') }}',
+                // 文件上传是携带参数
+                formData: {
+                    _token: '{{csrf_token()}}'
+                },
+                // 文件上传是的表单名称
+                fileVal: 'file',
+                // 选择文件的按钮
+                pick: {
+                    id: '#picker_outline_' + num,
+                    // 是否开启选择多个文件的能力
+                    multiple: false
+                },
+                // 压缩image, 默认如果是jpeg，文件上传前会压缩一把再上传！
+                resize: true
+            });
+
+            // 上传成功时的回调方法
+            uploader_.on('uploadSuccess', function (file, ret) {
+                // 图片路径
+                let src = ret.url;
+                // 隐藏域传值
+                let obj = $('#img_url_outline_' + num);
+                obj.val(src);
+                // img渲染图片
+                let imglist = $('#img_show_outline_' + num);
+                let html = `
+            <span style="position: relative;margin-right: 30px">
+                <img src="${ret.url}" style="width: 100px;height: 100px;" />
+                <strong onclick="delimg(this, '${ret.url}', '${num}', '#img_url_outline_')" style="position: absolute;color: #1F1F1F;left: 110px;cursor:pointer;">X</strong>
+            </span>
+            `;
+                imglist.append(html);
+            });
+        });
+
+        function delimg(obj, url, num, demo) {
+
             let info = {
                 _token: '{{csrf_token()}}',
                 url: url
             };
-            let picObj = $('#img_url_' + num);
+            let picObj = $(demo + num);
             $.ajax({
                 url: "{{ route('admin.delfile') }}",
                 type: 'post',

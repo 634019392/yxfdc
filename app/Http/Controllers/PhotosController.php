@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\House;
 use App\Models\HouseFloor;
+use App\Models\HouseOutline;
 use Illuminate\Http\Request;
 
 class PhotosController extends Controller
@@ -23,6 +24,9 @@ class PhotosController extends Controller
             $url = config('qiniu.http') . $file;
             if ($request->has('num')) {
                 return ['status' => 0, 'url' => $url, 'num' => (int)$request->get('num')];
+            }
+            if ($request->has('outline_num')) {
+                return ['status' => 0, 'url' => $url, 'outline_num' => (int)$request->get('outline_num')];
             }
             return ['status' => 0, 'url' => $url];
         } else {
@@ -50,11 +54,17 @@ class PhotosController extends Controller
                 $house->img = '';
                 $house->save();
             }
-            if ($request->get('del_img') == 'foolr_plan_img') {
+            if ($request->get('del_img') == 'foolr_plan_img' && $request->get('id')) {
                 // 删除对应的户型图图片
-                $floorModel = HouseFloor::find($request->get('house_floor_id'));
+                $floorModel = HouseFloor::find($request->get('id'));
                 $floorModel->floor_plan = '';
                 $floorModel->save();
+            }
+            if ($request->get('del_img') == 'outline_pic_img' && $request->get('id')) {
+                // 删除对应的项目概要
+                $outlineModel = HouseOutline::find($request->get('id'));
+                $outlineModel->outline_pic = '';
+                $outlineModel->save();
             }
         }
 

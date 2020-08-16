@@ -38,7 +38,7 @@ class HousesController extends Controller
     public function show(Request $request)
     {
         $house_id = $request->get('house_id');
-        $house = House::find($house_id)->load(['mating','houseFloors'])->toArray();
+        $house = House::find($house_id)->load(['mating','houseFloors','houseOutlines'])->toArray();
         if ($house['tag']) {
             $house['tag'] = explode('#', $house['tag']);
         } else {

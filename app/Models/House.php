@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Models;
+
 use App\Models\Traits\Btn;
 
 class House extends Base
@@ -22,6 +23,12 @@ class House extends Base
     public function houseFloors()
     {
         return $this->hasMany(HouseFloor::class);
+    }
+
+    // 1对多 项目大概
+    public function houseOutlines()
+    {
+        return $this->hasMany(HouseOutline::class, 'house_id', 'id');
     }
 
 

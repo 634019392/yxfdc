@@ -101,7 +101,7 @@
             <div class="row cl">
                 <label class="form-label col-xs-4 col-sm-3"><span class="c-red">*</span>开盘日期：</label>
                 <div class="formControls col-xs-8 col-sm-9">
-                    <input type="text" class="input-text" name="mating[open_time]" value="{{ $data->mating->open_time }}" />
+                    <input type="text" class="input-text" name="mating[open_time]" value="{{ $data->mating->open_time }}"/>
                 </div>
             </div>
 
@@ -171,7 +171,7 @@
             <div class="row cl">
                 <label class="form-label col-xs-4 col-sm-3"><span class="c-red">*</span>交付日期：</label>
                 <div class="formControls col-xs-8 col-sm-9">
-                    <input type="text" class="input-text" name="mating[delivery_time]" value="{{ $data->mating->delivery_time }}" />
+                    <input type="text" class="input-text" name="mating[delivery_time]" value="{{ $data->mating->delivery_time }}"/>
                 </div>
             </div>
 
@@ -214,19 +214,19 @@
                 @if($data->houseFloors)
                     <input type="hidden" id="add_num" value="{{ $data->houseFloors->count() }}">
                     @foreach($data->houseFloors as $k => $floor_plan)
-                        <input type="hidden" name="foolr_plan[{{$k}}][id]" value="{{ $floor_plan->id }}">
+                        <input type="hidden" name="house_floors[{{$k}}][id]" value="{{ $floor_plan->id }}">
                         <div class="row cl">
                             <label class="form-label col-xs-4 col-sm-3"><span class="c-red">*</span>户型图：</label>
                             <div class="formControls col-xs-2 col-sm-2">
                                 <div id="picker_{{$k}}">上传</div>
                             </div>
                             <div class="formControls col-xs-6 col-sm-7">
-                                <input type="hidden" name="foolr_plan[{{$k}}][floor_plan]" id="img_url_{{$k}}" data-house_floor_id="{{ $floor_plan->id }}" value="{{ $floor_plan->floor_plan }}"/>
+                                <input type="hidden" name="house_floors[{{$k}}][floor_plan]" id="img_url_{{$k}}" data-id="{{ $floor_plan->id }}" value="{{ $floor_plan->floor_plan }}"/>
                                 <div id="img_show_{{$k}}">
                                     @if($floor_plan->floor_plan)
                                         <span style="position: relative;margin-right: 30px">
                                             <img src="{{ $floor_plan->floor_plan }}" style="width: 100px;height: 100px;"/>
-                                            <strong onclick="delimg(this, '{{ $floor_plan->floor_plan }}', '{{$k}}', 'foolr_plan_img')" style="position: absolute;color: #1F1F1F;left: 110px;cursor:pointer;">X</strong>
+                                            <strong onclick="delimg(this, '{{ $floor_plan->floor_plan }}', '{{$k}}', '#img_url_', 'foolr_plan_img')" style="position: absolute;color: #1F1F1F;left: 110px;cursor:pointer;">X</strong>
                                         </span>
                                     @endif
                                 </div>
@@ -235,19 +235,49 @@
                         <div class="row cl">
                             <label class="form-label col-xs-4 col-sm-3"><span class="c-red">*</span>描述1：</label>
                             <div class="formControls col-xs-8 col-sm-9">
-                                <input type="text" class="input-text" name="foolr_plan[{{$k}}][floor_row1]" value="{{ $floor_plan->floor_row1 }}">
+                                <input type="text" class="input-text" name="house_floors[{{$k}}][floor_row1]" value="{{ $floor_plan->floor_row1 }}">
                             </div>
                         </div>
                         <div class="row cl">
                             <label class="form-label col-xs-4 col-sm-3"><span class="c-red">*</span>描述2：</label>
                             <div class="formControls col-xs-8 col-sm-9">
-                                <input type="text" class="input-text" name="foolr_plan[{{$k}}][floor_row2]" value="{{ $floor_plan->floor_row2 }}">
+                                <input type="text" class="input-text" name="house_floors[{{$k}}][floor_row2]" value="{{ $floor_plan->floor_row2 }}">
                             </div>
                         </div>
                         <div class="row cl">
                             <label class="form-label col-xs-4 col-sm-3"><span class="c-red">*</span>描述3：</label>
                             <div class="formControls col-xs-8 col-sm-9">
-                                <input type="text" class="input-text" name="foolr_plan[{{$k}}][floor_row3]" value="{{ $floor_plan->floor_row3 }}">
+                                <input type="text" class="input-text" name="house_floors[{{$k}}][floor_row3]" value="{{ $floor_plan->floor_row3 }}">
+                            </div>
+                        </div>
+                    @endforeach
+                @endif
+            </span>
+
+            <div class="row cl">
+                <label class="form-label col-xs-4 col-sm-3"><span style="font-size: x-large">项目概要</span></label>
+                <input class="btn btn-success radius btn-outline-plan" type="button" style="margin-top: 10px;margin-left: 13px" value="新增">
+            </div>
+            <span class="outline_pic_list">
+                @if($data->houseOutlines)
+                    <input type="hidden" id="add_outline_num" value="{{ $data->houseOutlines->count() }}">
+                    @foreach($data->houseOutlines as $k => $house_outline)
+                        <input type="hidden" name="house_outlines[{{$k}}][id]" value="{{ $house_outline->id }}">
+                        <div class="row cl">
+                            <label class="form-label col-xs-4 col-sm-3"><span class="c-red">*</span>项目概要：</label>
+                            <div class="formControls col-xs-2 col-sm-2">
+                                <div id="picker_outline_{{$k}}">上传</div>
+                            </div>
+                            <div class="formControls col-xs-6 col-sm-7">
+                                <input type="hidden" name="house_outlines[{{$k}}][outline_pic]" id="img_url_outline_{{$k}}" data-id="{{ $house_outline->id }}" value="{{ $house_outline->outline_pic }}"/>
+                                <div id="img_show_outline_{{$k}}">
+                                    @if($house_outline->outline_pic)
+                                        <span style="position: relative;margin-right: 30px">
+                                            <img src="{{ $house_outline->outline_pic }}" style="width: 100px;height: 100px;"/>
+                                            <strong onclick="delimg(this, '{{ $house_outline->outline_pic }}', '{{$k}}', '#img_url_outline_', 'outline_pic_img')" style="position: absolute;color: #1F1F1F;left: 110px;cursor:pointer;">X</strong>
+                                        </span>
+                                    @endif
+                                </div>
                             </div>
                         </div>
                     @endforeach
@@ -269,8 +299,8 @@
     <script type="text/javascript" src="/webuploader/webuploader.js"></script>
 
     <script>
-        // 编辑页面已存在的户型图，在页面准备阶段实例化这些户型图的上传插件
         $(document).ready(function () {
+            // 编辑页面已存在的户型图，在页面准备阶段实例化这些户型图的上传插件
             var num = $('#add_num').val();
             for (i = 0; i < num; i++) {
                 // 初始化Web Uploader
@@ -311,13 +341,62 @@
                     let html = `
             <span style="position: relative;margin-right: 30px">
                 <img src="${ret.url}" style="width: 100px;height: 100px;" />
-                <strong onclick="delimg(this, '${ret.url}', '${num}', 'foolr_plan_img')" style="position: absolute;color: #1F1F1F;left: 110px;cursor:pointer;">X</strong>
+                <strong onclick="delimg(this, '${ret.url}', '${num}', '#img_url_', 'foolr_plan_img')" style="position: absolute;color: #1F1F1F;left: 110px;cursor:pointer;">X</strong>
             </span>
             `;
                     imglist.append(html);
                 });
             }
 
+            // 编辑页面已存在的概要，在页面准备阶段实例化这些户型图的上传插件
+            var outline_num = $('#add_outline_num').val();
+            for (ii = 0; ii < outline_num; ii++) {
+                // 初始化Web Uploader
+                var outline_uploader_ = WebUploader.create({
+                    // 选完文件后，是否自动上传
+                    auto: true,
+                    // swf文件路径
+                    swf: '/webuploader/Uploader.swf',
+                    // 文件接收服务端 上传PHP的代码
+                    server: '{{ route('admin.upfile') }}',
+                    // 文件上传是携带参数
+                    formData: {
+                        _token: '{{csrf_token()}}',
+                        outline_num: ii
+                    },
+                    // 文件上传是的表单名称
+                    fileVal: 'file',
+                    // 选择文件的按钮
+                    pick: {
+                        id: '#picker_outline_' + ii,
+                        // 是否开启选择多个文件的能力
+                        multiple: false
+                    },
+                    // 压缩image, 默认如果是jpeg，文件上传前会压缩一把再上传！
+                    resize: true
+                });
+
+                // 上传成功时的回调方法
+                outline_uploader_.on('uploadSuccess', function (file, ret) {
+                    console.log(2);
+                    console.log(ret);
+                    // 图片路径
+                    let src = ret.url;
+                    let outline_num = ret.outline_num;
+                    // 隐藏域传值
+                    let obj = $('#img_url_outline_' + outline_num);
+                    obj.val(src);
+                    // img渲染图片
+                    let imglist = $('#img_show_outline_' + outline_num);
+                    let html = `
+            <span style="position: relative;margin-right: 30px">
+                <img src="${ret.url}" style="width: 100px;height: 100px;" />
+                <strong onclick="delimg(this, '${ret.url}', '${outline_num}', '#img_url_outline_', 'outline_pic_img')" style="position: absolute;color: #1F1F1F;left: 110px;cursor:pointer;">X</strong>
+            </span>
+            `;
+                    imglist.append(html);
+                });
+            }
         });
 
 
@@ -391,11 +470,11 @@
             }
         });
 
-//        //手机号验证
-//        jQuery.validator.addMethod("iphone", function (value, element) {
-//            var reg = /^(\+86-|%(\s{0}))?1[3-9]\d{9}$/;
-//            return this.optional(element) || (reg.test(value));
-//        }, "请正确填写您的手机号码");
+        //        //手机号验证
+        //        jQuery.validator.addMethod("iphone", function (value, element) {
+        //            var reg = /^(\+86-|%(\s{0}))?1[3-9]\d{9}$/;
+        //            return this.optional(element) || (reg.test(value));
+        //        }, "请正确填写您的手机号码");
 
 
         // 这个是楼盘封面的初始化上传按钮
@@ -462,16 +541,17 @@
             })
         }
 
-        // 户型图的
         // del_img: foolr_plan_img
-        function delimg(obj, url, num, del_img) {
-            let picObj = $('#img_url_' + num);
+        function delimg(obj, url, num, demo, del_img) {
+            let picObj = $(demo + num);
             let info = {
                 _token: '{{csrf_token()}}',
                 url: url,
                 del_img: del_img,
-                house_floor_id: picObj.data('house_floor_id')
+                id: picObj.data('id')
             };
+            console.log(picObj);
+            console.log(info);
             $.ajax({
                 url: "{{ route('admin.delfilesql') }}",
                 type: 'post',
@@ -484,6 +564,7 @@
             })
         }
 
+        // 户型图的
         $('.btn-foolr-plan').click(function (ret) {
             let obj = $('#add_num');
             let num = obj.val();
@@ -496,26 +577,26 @@
                     <div id="picker_${num}">上传</div>
                 </div>
                 <div class="formControls col-xs-6 col-sm-7">
-                    <input type="hidden" name="foolr_plan[${num}][floor_plan]" id="img_url_${num}"/>
+                    <input type="hidden" name="house_floors[${num}][floor_plan]" id="img_url_${num}"/>
                     <div id="img_show_${num}"></div>
                 </div>
             </div>
             <div class="row cl">
                 <label class="form-label col-xs-4 col-sm-3"><span class="c-red">*</span>描述1：</label>
                 <div class="formControls col-xs-8 col-sm-9">
-                    <input type="text" class="input-text" name="foolr_plan[${num}][floor_row1]" value="{{ old('row1') }}">
+                    <input type="text" class="input-text" name="house_floors[${num}][floor_row1]" value="{{ old('row1') }}">
                 </div>
             </div>
             <div class="row cl">
                 <label class="form-label col-xs-4 col-sm-3"><span class="c-red">*</span>描述2：</label>
                 <div class="formControls col-xs-8 col-sm-9">
-                    <input type="text" class="input-text" name="foolr_plan[${num}][floor_row2]" value="{{ old('row2') }}">
+                    <input type="text" class="input-text" name="house_floors[${num}][floor_row2]" value="{{ old('row2') }}">
                 </div>
             </div>
             <div class="row cl">
                 <label class="form-label col-xs-4 col-sm-3"><span class="c-red">*</span>描述3：</label>
                 <div class="formControls col-xs-8 col-sm-9">
-                    <input type="text" class="input-text" name="foolr_plan[${num}][floor_row3]" value="{{ old('row3') }}">
+                    <input type="text" class="input-text" name="house_floors[${num}][floor_row3]" value="{{ old('row3') }}">
                 </div>
             </div>
             `;
@@ -557,12 +638,75 @@
                 let html = `
             <span style="position: relative;margin-right: 30px">
                 <img src="${ret.url}" style="width: 100px;height: 100px;" />
-                <strong onclick="delimg(this, '${ret.url}', '${num}')" style="position: absolute;color: #1F1F1F;left: 110px;cursor:pointer;">X</strong>
+                <strong onclick="delimg(this, '${ret.url}', '${num}', '#img_url_', 'foolr_plan_img')" style="position: absolute;color: #1F1F1F;left: 110px;cursor:pointer;">X</strong>
             </span>
             `;
                 imglist.append(html);
             });
         });
 
+
+        // 项目概要
+        $('.btn-outline-plan').click(function (ret) {
+            let obj = $('#add_outline_num');
+            let num = obj.val();
+            obj.val(parseInt(num) + 1);
+
+            let html = `
+            <div class="row cl">
+                <label class="form-label col-xs-4 col-sm-3"><span class="c-red">*</span>项目概要：</label>
+                <div class="formControls col-xs-2 col-sm-2">
+                    <div id="picker_outline_${num}">上传</div>
+                </div>
+                <div class="formControls col-xs-6 col-sm-7">
+                    <input type="hidden" name="house_outlines[${num}][outline_pic]" id="img_url_outline_${num}"/>
+                    <div id="img_show_outline_${num}"></div>
+                </div>
+            </div>
+            `;
+            $('.outline_pic_list').append(html);
+
+            // 初始化Web Uploader
+            var uploader_ = WebUploader.create({
+                // 选完文件后，是否自动上传
+                auto: true,
+                // swf文件路径
+                swf: '/webuploader/Uploader.swf',
+                // 文件接收服务端 上传PHP的代码
+                server: '{{ route('admin.upfile') }}',
+                // 文件上传是携带参数
+                formData: {
+                    _token: '{{csrf_token()}}'
+                },
+                // 文件上传是的表单名称
+                fileVal: 'file',
+                // 选择文件的按钮
+                pick: {
+                    id: '#picker_outline_' + num,
+                    // 是否开启选择多个文件的能力
+                    multiple: false
+                },
+                // 压缩image, 默认如果是jpeg，文件上传前会压缩一把再上传！
+                resize: true
+            });
+
+            // 上传成功时的回调方法
+            uploader_.on('uploadSuccess', function (file, ret) {
+                // 图片路径
+                let src = ret.url;
+                // 隐藏域传值
+                let obj = $('#img_url_outline_' + num);
+                obj.val(src);
+                // img渲染图片
+                let imglist = $('#img_show_outline_' + num);
+                let html = `
+            <span style="position: relative;margin-right: 30px">
+                <img src="${ret.url}" style="width: 100px;height: 100px;" />
+                <strong onclick="delimg(this, '${ret.url}', '${num}', '#img_url_outline_', 'outline_pic_img')" style="position: absolute;color: #1F1F1F;left: 110px;cursor:pointer;">X</strong>
+            </span>
+            `;
+                imglist.append(html);
+            });
+        });
     </script>
 @stop
