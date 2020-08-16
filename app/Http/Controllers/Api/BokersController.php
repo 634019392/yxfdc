@@ -176,7 +176,8 @@ class BokersController extends Controller
             return response()->json(['status' => 1005, 'msg' => '手机号必填'], 412);
         }
         if (!$card_alert_six) {
-            return response()->json(['status' => 1005, 'msg' => '身份证后六位必填'], 412);
+            $card_alert_six = '000000'; // 默认身份证后6位为 000000，后期如需要添加身份证后6位排除 000000，如果与手机号不匹配即提示
+//            return response()->json(['status' => 1005, 'msg' => '身份证后六位必填'], 412);
         }
         if (!$age) {
             $age = 0;
