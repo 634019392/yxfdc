@@ -93,3 +93,29 @@ function subTree($data, $pid = 0)
     return $arr;
 
 }
+
+//循环删除目录和文件bai函数
+function delDirAndFile($dirName) {
+    // 打开指定目录
+    if ($handle = @opendir($dirName))
+    {
+        while (($file = readdir($handle)) !== false)
+        {
+            if (($file == ".") || ($file == ".."))
+            {
+                continue;
+            }
+            if (is_dir($dirName . '/' . $file))
+            {
+                // 递归
+                delDirAndFile($dirName . '/' . $file);
+            }
+            else
+            {
+                unlink($dirName . '/' . $file); // 删除文件
+            }
+        }
+        @closedir($handle);
+        rmdir ($dirName);
+    }
+}

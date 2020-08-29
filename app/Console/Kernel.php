@@ -29,6 +29,8 @@ class Kernel extends ConsoleKernel
 
          $schedule->command('cron:customer-failure')
                   ->cron('0 1 * * *');
+         $schedule->command('cron:clean-excel')
+                  ->cron('50 0 * * *');
     }
 
     /**

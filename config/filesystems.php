@@ -80,6 +80,11 @@ return [
             'root' => public_path('/uploads/images'),
         ],
 
+        'excel' => [
+            'driver' => 'local',
+            'root' => public_path('/uploads/excel_images'),
+        ],
+
         'public' => [
             'driver' => 'local',
             'root' => storage_path('app/public'),

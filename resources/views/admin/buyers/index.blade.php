@@ -18,6 +18,32 @@
             {{--<i class="icon-trash"></i>--}}
             {{--批量删除</a>--}}
             {{--</span>--}}
+
+            {{--点击导出excel为模态框start--}}
+            <button class="btn radius btn-primary" onClick="modaldemo()">导出excel</button>
+            <div id="excel-demo" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content radius">
+                        <div class="modal-header">
+                            <h3 class="modal-title">选择导出日期</h3>
+                            <a class="close" data-dismiss="modal" aria-hidden="true" href="javascript:void();">×</a>
+                        </div>
+                        <div class="modal-body">
+                            <p>
+                                开始时间：<input type="text" name="start_time" onfocus="WdatePicker({maxDate:'#F{$dp.$D(\'datemax\')||\'%y-%M-%d\'}'})" id="datemin" class="input-text Wdate" style="width:120px;">
+                                 -------
+                                结束时间：<input type="text" name="end_time" onfocus="WdatePicker({minDate:'#F{$dp.$D(\'datemin\')}',maxDate:'%y-%M-%d'})" id="datemax" class="input-text Wdate" style="width:120px;">
+
+                        </div>
+                        <div class="modal-footer">
+                            <button onclick="download_excel()" class="btn btn-primary">确定</button>
+                            <button class="btn" data-dismiss="modal" aria-hidden="true">关闭</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {{--点击导出excel为模态框end--}}
+
             <span class="r">共有数据：<strong>{{ count($buyers) }}</strong> 条</span>
         </div>
         <table class="table table-border table-bordered table-hover table-bg table-sort">
@@ -117,6 +143,29 @@
 @section('js')
     <script>
         const _token = "{{ csrf_token() }}";
+
+        // 导出excel模态框
+        function modaldemo(){
+            $("#excel-demo").modal("show");
+        }
+        // 导出
+        function download_excel() {
+            var start_time = $("input[name=start_time]").val();
+            var end_time = $("input[name=end_time]").val();
+            var info = {start_time, end_time, _token:_token};
+            $.ajax({
+                type: 'post',
+                data: info,
+                url: "{{route('admin.buyers.export')}}",
+                success: function(res) {
+                    if (res.status === 0) {
+                        window.open(res.down_url)
+                        $("#excel-demo").modal("hide");
+                    }
+                }
+            })
+        }
+
         // 单个删除
         $('.delbtn').click(function () {
             let _this = $(this);

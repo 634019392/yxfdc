@@ -85,6 +85,7 @@ Route::group(['prefix' => 'admin', 'namespace' => 'Admin', 'as' => 'admin.'], fu
 
         // 全民营销
         // 客户列表
+        Route::post('buyers/export', 'BuyersController@export')->name('buyers.export');
         Route::get('buyers/index', 'BuyersController@index')->name('buyers.index');
         // 客户状态编辑
         Route::get('buyers/{recommender}/edit', 'BuyersController@edit')->name('buyers.edit');
