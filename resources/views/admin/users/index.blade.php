@@ -53,7 +53,11 @@
                     <td>{{ $user->id }}</td>
                     <td>{{ $user->username }}</td>
                     <td>{{ $user->truename }}</td>
-                    <td>{{ $user->role->name }}</td>
+                    @if(in_array($user->role_id, $roles))
+                        <td>{{ $user->role->name }}</td>
+                    @else
+                        <td>游客</td>
+                    @endif
                     <td>{{ $user->sex }}</td>
                     <td>{{ $user->phone }}</td>
                     <td>{{ $user->email }}</td>
@@ -104,8 +108,8 @@
         function deleteAll() {
             //询问框
             layer.confirm('确定是全选删除？', {
-                btn: ['是的','取消'] //按钮
-            }, function(){
+                btn: ['是的', '取消'] //按钮
+            }, function () {
                 let ck_dom = $('input[name="ids[]"]:checked');
                 let ids = [];
                 ck_dom.each((key, value) => {
@@ -116,10 +120,10 @@
                     $.ajax({
                         url: "{{ route('admin.users.delall') }}",
                         type: 'delete',
-                        data: {ids:ids, _token:_token},
+                        data: {ids: ids, _token: _token},
                     }).then(res => {
                         if (res.status === 0) {
-                            layer.msg(res.msg, {time:1000, icon:1}, () => {
+                            layer.msg(res.msg, {time: 1000, icon: 1}, () => {
                                 location.reload();
                             });
                         }

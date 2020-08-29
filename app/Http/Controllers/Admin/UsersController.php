@@ -13,8 +13,9 @@ class UsersController extends BaseController
 {
     public function index()
     {
+        $roles = Role::all()->pluck('id')->toArray();
         $users = User::orderBy('created_at', 'desc')->withTrashed()->paginate($this->pagesize);
-        return view('admin.users.index', compact('users'));
+        return view('admin.users.index', compact('users', 'roles'));
     }
 
     public function create()
