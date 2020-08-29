@@ -14,7 +14,8 @@
 <header class="navbar-wrapper">
     <div class="navbar navbar-fixed-top">
         <div class="container-fluid cl"><a class="logo navbar-logo f-l mr-10 hidden-xs" href="/aboutHui.shtml">阳新房地产</a>
-            <a class="logo navbar-logo-m f-l mr-10 visible-xs" href="/aboutHui.shtml">H-ui</a>
+            <a class="logo navbar-logo-m f-l mr-10 visible-xs" href="{{route('admin.index')}}">H-ui</a>
+            <a aria-hidden="false" class="nav-toggle Hui-iconfont visible-xs" href="javascript:;"></a>
             <nav id="Hui-userbar" class="nav navbar-nav navbar-userbar hidden-xs">
                 <ul class="cl">
                     <li>{{ auth()->user()->truename }}</li>
