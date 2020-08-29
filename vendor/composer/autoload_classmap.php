@@ -93,6 +93,7 @@ return array(
     'App\\Console\\Kernel' => $baseDir . '/app/Console/Kernel.php',
     'App\\Exceptions\\Handler' => $baseDir . '/app/Exceptions/Handler.php',
     'App\\Exports\\FangownersExport' => $baseDir . '/app/Exports/FangownersExport.php',
+    'App\\Exports\\RecommendersExport' => $baseDir . '/app/Exports/RecommendersExport.php',
     'App\\Http\\Controllers\\Admin\\AdvimgsController' => $baseDir . '/app/Http/Controllers/Admin/AdvimgsController.php',
     'App\\Http\\Controllers\\Admin\\ArticlesController' => $baseDir . '/app/Http/Controllers/Admin/ArticlesController.php',
     'App\\Http\\Controllers\\Admin\\BaseController' => $baseDir . '/app/Http/Controllers/Admin/BaseController.php',
