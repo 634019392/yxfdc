@@ -130,6 +130,7 @@
                     </td>
                     <td>
                         {!! $buyer->editBtn('admin.buyers.edit') !!}
+                        {!! $buyer->atWillBtn('admin.buyers.tail') !!}
                     </td>
                 </tr>
             @endforeach
@@ -160,8 +161,10 @@
                 success: function(res) {
                     if (res.status === 0) {
                         window.open(res.down_url)
-                        $("#excel-demo").modal("hide");
+                    } else {
+                        layer.msg('没有此操作权限', {time: 1000})
                     }
+                    $("#excel-demo").modal("hide");
                 }
             })
         }

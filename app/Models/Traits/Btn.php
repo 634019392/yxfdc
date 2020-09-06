@@ -39,4 +39,25 @@ trait Btn
             return '<a href="' . route($route_name, $this) . '" class="label label-danger radius delbtn">删除</a>';
         }
     }
+
+    // 判断权限的自定义按钮
+    // {{ route('admin.users.edit', $user) }}
+    public function atWillBtn($route_name, $btnName = '跟踪', $class = 'label-secondary')
+    {
+        if (auth()->user()->username != config('rbac.super') && !in_array($route_name, request()->admin_auth)) {
+            return '';
+        } else {
+            return '<a href="' . route($route_name, $this) . '" class="label '.$class.' radius">'.$btnName.'</a>';
+        }
+    }
+
+    // 模态框
+    public function atWillModal($route_name, $btnName = '编辑', $class = 'btn-secondary')
+    {
+        if (auth()->user()->username != config('rbac.super') && !in_array($route_name, request()->admin_auth)) {
+            return '';
+        } else {
+            return '<button class="btn '.$class.' radius size-S at-will-modal" data-id='.$this->id.'>'.$btnName.'</button>';
+        }
+    }
 }

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Exports\RecommendersExport;
+use App\Models\ClientRecord;
 use App\Models\Recommender;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Input;
@@ -49,5 +50,31 @@ class BuyersController extends BaseController
         $down_url = $_SERVER['HTTP_ORIGIN'] . '/uploads/excel_images' . '/' . $file_path;
 //        $down_url = public_path('/uploads/excel_images') . '/' . $file_path;
         return ['status' => 0, 'down_url' => $down_url];
+    }
+
+    // 客户跟踪显示
+    public function tail(Recommender $recommender)
+    {
+        $client_records = ClientRecord::where('recommender_id', $recommender->id)->get();
+        return view('admin.buyers.tail', compact('recommender', 'client_records'));
+    }
+
+    // 客户跟踪创建-客户记录
+    public function tail_create(Request $request, $recommender)
+    {
+        $postData = $request->except('_token', '_method');
+        $postData['recommender_id'] = $recommender;
+        $client_record = ClientRecord::create($postData);
+        if ($client_record) {
+            return redirect()->route('admin.buyers.tail', $recommender);
+        }
+    }
+
+    // 更新客户记录
+    public function tail_update(Request $request, ClientRecord $clientRecord)
+    {
+        $postArr = $request->except(['_token', '_method']);
+        $clientRecord->update($postArr);
+        return redirect()->route('admin.buyers.tail', $clientRecord->recommender_id);
     }
 }

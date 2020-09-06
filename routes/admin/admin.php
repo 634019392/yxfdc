@@ -90,6 +90,11 @@ Route::group(['prefix' => 'admin', 'namespace' => 'Admin', 'as' => 'admin.'], fu
         // 客户状态编辑
         Route::get('buyers/{recommender}/edit', 'BuyersController@edit')->name('buyers.edit');
         Route::put('buyers/{recommender}', 'BuyersController@update')->name('buyers.update');
+        // 客户跟踪-客户记录列表渲染-客户记录新增功能
+        Route::get('buyers/{recommender}/tail', 'BuyersController@tail')->name('buyers.tail');
+        Route::post('buyers/{recommender}/tail_create', 'BuyersController@tail_create')->name('buyers.tail_create');
+        // 客户跟踪-客户记录更新功能
+        Route::put('buyers/tail/{clientRecord}', 'BuyersController@tail_update')->name('buyers.tail_update');
     });
 
 

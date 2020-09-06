@@ -61,4 +61,6 @@ Route::group(['middleware'=>'auth:api','prefix'=>'v1','namespace'=>'Api'],functi
     // 参与全民经纪人楼盘
     Route::get('houses/boker_houses', 'HousesController@boker_houses');
 
+    // 客户记录
+    Route::post('client/records', 'ClientsController@records');
 });
