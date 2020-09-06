@@ -52,9 +52,9 @@ trait Btn
     }
 
     // 模态框
-    public function atWillModal($route_name, $btnName = '编辑', $class = 'btn-secondary')
+    public function atWillModal($route_name, $btnName = '编辑', $is_permission = true, $class = 'btn-secondary')
     {
-        if (auth()->user()->username != config('rbac.super') && !in_array($route_name, request()->admin_auth)) {
+        if (auth()->user()->username != config('rbac.super') && !in_array($route_name, request()->admin_auth) && !$is_permission) {
             return '';
         } else {
             return '<button class="btn '.$class.' radius size-S at-will-modal" data-id='.$this->id.'>'.$btnName.'</button>';
