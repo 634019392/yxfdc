@@ -185,9 +185,6 @@ class BokersController extends Controller
         if (!$truename) {
             return response()->json(['status' => 1005, 'msg' => '姓名不能为空'], 412);
         }
-        if (empty($house_ids)) {
-            return response()->json(['status' => 1005, 'msg' => '必须选择推荐楼盘'], 412);
-        }
 
         $user = Apiuser::where('openid', $openid)->first();
         $buyer = [
@@ -202,7 +199,8 @@ class BokersController extends Controller
             // 必须是经纪人
             return response()->json(['status' => 1005, 'msg' => '请先进行经纪人认证']);
         }
-        $callback_params = $user->recommend($openid, $buyer, $house_arr);
+        $callback_params = $user->recommend($buyer, $house_arr);
+//        $callback_params = $user->recommend1($openid, $buyer, $house_arr);
         if (isset($callback_params['status']) && $callback_params['status'] == 412) {
             return response()->json(['status' => 1005, 'msg' => $callback_params['msg']], $callback_params['status']);
         }

@@ -21,11 +21,62 @@ class Apiuser extends AuthUser
             ->withTimestamps();
     }
 
+    // 重构推荐
+    public function recommend($buyer_arr, $house_arr)
+    {
+        // 推荐楼盘的id
+        $house_id = $house_arr[0];
+
+        if (!is_array($buyer_arr)) {
+            compact('buyer_arr');
+        }
+        // $buyer_arr 必然会有手机号和身份证后6位数
+        if (!isset($buyer_arr['truename']) && !isset($buyer_arr['phone']) && !isset($buyer_arr['card_alert_six'])) {
+            return ['status' => 412, 'msg' => '姓名、手机号、身份证后6位为必填'];
+        }
+        if (strlen($buyer_arr['card_alert_six']) <> 6) {
+            return ['status' => 412, 'msg' => '请检查身份证是否为6位'];
+        }
+        $pattern = "/^((1[0-9][0-9]))\\d{8}$/";
+        $string = $buyer_arr['phone'];
+        if (!preg_match($pattern, $string)) {
+            return ['status' => 412, 'msg' => '请输入正确手机号格式'];
+        }
+
+        $buyers = Buyer::where('phone', $buyer_arr['phone'])->get();
+        // 添加入库的2中情况
+        // 1.查不到手机号直接可以推荐；2.能查出手机号，但是查出的号码的客户被推荐的状态是5
+//        if ($buyers->isEmpty()) {
+//            // 不存在的情况：随意推荐不限制
+//            // 1.用户列表创建用户  2.纳入到推荐者门下
+//            $new_user = Buyer::create($buyer_arr);
+//
+//            $this->buyers()->attach($new_user->id, ['house_id' => $house_id, 'protect_time' => Carbon::now()->addDays(30)]);
+//
+//            return ['status' => 200, 'msg' => '推荐成功!'];
+//        }
+
+        // 超简单逻辑，推荐的号码存在 且 推荐楼盘与存在的楼盘一样 且 状态没过期 这种情况不允许推荐
+        if (!$buyers->isEmpty()) {
+            $exist_buyer_ids = $buyers->pluck('id');
+            $exist_buyer_recommender = Recommender::whereIn('buyer_id', $exist_buyer_ids)->get(['house_id', 'status'])->makeHidden('status_arr');
+            foreach ($exist_buyer_recommender as $val) {
+                if ($val['house_id'] == $house_id && $val['status'] != 5) {
+                    return ['status' => 412, 'msg' => '该用户已被推荐'];
+                }
+            }
+        }
+
+        $new_user = Buyer::create($buyer_arr);
+        $this->buyers()->attach($new_user->id, ['house_id' => $house_id, 'protect_time' => Carbon::now()->addDays(30)]);
+        return ['status' => 200, 'msg' => '推荐成功!'];
+    }
+
     // 推荐 （可以推荐自己）
     // $buyer_arr 必须有手机号，身份证后6位
     // $house_arr 默认为0
     //  $is_filt = 0为不过滤，1为过滤（只取参与全民营销的楼盘）
-    public function recommend($openid, $buyer_arr, $house_arr = 0, $is_filt = 0)
+    public function recommend1($openid, $buyer_arr, $house_arr = 0, $is_filt = 0)
     {
         if (!is_array($buyer_arr)) {
             compact('buyer_arr');
@@ -56,7 +107,7 @@ class Apiuser extends AuthUser
             }
         }
 
-        $buyer = Buyer::where('phone', $buyer_arr['phone'])->first();
+        $buyer = Buyer::where('phone', $buyer_arr['phone'])->get();
 
         if (!$buyer) {
             // 不存在的情况：随意推荐不限制
