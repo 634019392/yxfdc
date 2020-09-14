@@ -14,7 +14,11 @@ class BuyersController extends BaseController
     // 经纪人---推荐楼盘---客户
     public function index(Request $request)
     {
-        $buyers = Recommender::with(['apiuser', 'buyer', 'house'])->orderBy('created_at', 'desc')->paginate($this->pagesize);
+        $buyers =Recommender::whereHas('buyer', function($query) use ($request) {
+            if ($request->has('kw')&& ($kw = $request->get('kw')) != '') {
+                $query->where('phone', $kw);
+            }
+        })->with(['apiuser', 'buyer', 'house'])->orderBy('created_at', 'desc')->paginate($this->pagesize);
         return view('admin.buyers.index', compact('buyers'));
     }
 

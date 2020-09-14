@@ -6,10 +6,10 @@
 @section('content')
 
     <div class="pd-20">
-        <div class="text-c"> 搜索客户：
-            <form action="{{ route('admin.houses.index') }}" method="get">
-                <input type="text" class="input-text" style="width:250px" value="{{ request()->get('kw') }}" placeholder="输入客户名称" id="" name="kw">
-                <button type="submit" class="btn btn-success"><i class="icon-search"></i> 搜客户名称</button>
+        <div class="text-c"> 搜索客户手机号：
+            <form action="{{ route('admin.buyers.index') }}" method="get">
+                <input type="text" class="input-text" style="width:250px" value="{{ request()->get('kw') }}" placeholder="输入客户手机号" name="kw">
+                <button type="submit" class="btn btn-success"><i class="icon-search"></i> 搜索</button>
             </form>
         </div>
         <div class="cl pd-5 bg-1 bk-gray mt-20">
