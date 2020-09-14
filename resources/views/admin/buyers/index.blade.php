@@ -31,7 +31,7 @@
                         <div class="modal-body">
                             <p>
                                 开始时间：<input type="text" name="start_time" onfocus="WdatePicker({maxDate:'#F{$dp.$D(\'datemax\')||\'%y-%M-%d\'}'})" id="datemin" class="input-text Wdate" style="width:120px;">
-                                 -------
+                                -------
                                 结束时间：<input type="text" name="end_time" onfocus="WdatePicker({minDate:'#F{$dp.$D(\'datemin\')}',maxDate:'%y-%M-%d'})" id="datemax" class="input-text Wdate" style="width:120px;">
 
                         </div>
@@ -82,7 +82,11 @@
                         {{ $buyer->apiuser->id_card }}
                     </td>
                     <td>
-                        {{ $buyer->house->name }}
+                        @if($buyer->house)
+                            {{ $buyer->house->name }}
+                        @else
+                            <span class="label label-danger radius">无信息</span>
+                        @endif
                     </td>
                     <td>
                         {{ $buyer->buyer->truename }}
@@ -146,19 +150,20 @@
         const _token = "{{ csrf_token() }}";
 
         // 导出excel模态框
-        function modaldemo(){
+        function modaldemo() {
             $("#excel-demo").modal("show");
         }
+
         // 导出
         function download_excel() {
             var start_time = $("input[name=start_time]").val();
             var end_time = $("input[name=end_time]").val();
-            var info = {start_time, end_time, _token:_token};
+            var info = {start_time, end_time, _token: _token};
             $.ajax({
                 type: 'post',
                 data: info,
                 url: "{{route('admin.buyers.export')}}",
-                success: function(res) {
+                success: function (res) {
                     if (res.status === 0) {
                         window.open(res.down_url)
                     } else {
