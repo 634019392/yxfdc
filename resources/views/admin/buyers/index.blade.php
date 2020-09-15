@@ -30,9 +30,9 @@
                         </div>
                         <div class="modal-body">
                             <p>
-                                开始时间：<input type="text" name="start_time" onfocus="WdatePicker({maxDate:'#F{$dp.$D(\'datemax\')||\'%y-%M-%d\'}'})" id="datemin" class="input-text Wdate" style="width:120px;">
+                                开始时间：<input type="text" name="start_time" onfocus="WdatePicker({maxDate:'#F{$dp.$D(\'datemax\')||\'%y-%M-%d\'}'})" id="datemin" autocomplete="off" class="input-text Wdate" style="width:120px;">
                                 -------
-                                结束时间：<input type="text" name="end_time" onfocus="WdatePicker({minDate:'#F{$dp.$D(\'datemin\')}',maxDate:'%y-%M-%d'})" id="datemax" class="input-text Wdate" style="width:120px;">
+                                结束时间：<input type="text" name="end_time" onfocus="WdatePicker({minDate:'#F{$dp.$D(\'datemin\')}',maxDate:'%y-%M-%d'})" id="datemax" autocomplete="off" class="input-text Wdate" style="width:120px;">
 
                         </div>
                         <div class="modal-footer">

@@ -42,14 +42,16 @@ class BuyersController extends BaseController
     public function export(Request $request)
     {
         $start_time = $request->input('start_time');
-        $end_time = $request->input('end_time');
+        $old_end_time = $request->input('end_time'); // 因为时间是截止到 例如选择2020-09-15会默认2020-09-15 00:00:00
         if (!$start_time) {
             $start_time = date('Y-m-d', time());
         }
-        if (!$end_time) {
-            $end_time = date('Y-m-d', time());
+        if (!$old_end_time) {
+            $old_end_time = date('Y-m-d', time());
         }
-        $file_path = date('Ymd', time()) . '/' . bin2hex(random_bytes(10)) . '.xlsx';
+        $end_time = date("Y-m-d", strtotime("$old_end_time"."+1 days"));
+
+        $file_path = date('Ymd', time()) . '/'.'全民经纪人('.$start_time.'-'.$old_end_time.')' . bin2hex(random_bytes(10)) . '.xlsx';
         Excel::store(new RecommendersExport($start_time, $end_time), $file_path, 'excel');
         $down_url = $_SERVER['HTTP_ORIGIN'] . '/uploads/excel_images' . '/' . $file_path;
 //        $down_url = public_path('/uploads/excel_images') . '/' . $file_path;
