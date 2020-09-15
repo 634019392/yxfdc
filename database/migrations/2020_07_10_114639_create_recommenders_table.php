@@ -18,7 +18,7 @@ class CreateRecommendersTable extends Migration
             $table->integer('apiuser_id')->default(0)->index()->comment('推荐人id');
             $table->integer('buyer_id')->default(0)->index()->comment('购买者id');
             $table->integer('house_id')->default(0)->index()->comment('给购买者推荐的楼盘id');
-            $table->enum('status', ['1', '2', '3', '4', '5'])->default('1')->comment('1：未到访，2：已到访，3：已认购，4：已签约，5：已过期');
+            $table->enum('status', ['0', '1', '2', '3', '4', '5'])->default('1')->comment('0：审核，1：未到访，2：已到访，3：已认购，4：已签约，5：已过期');
             $table->timestamps();
         });
     }
