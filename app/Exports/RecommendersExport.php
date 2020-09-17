@@ -48,7 +48,8 @@ class RecommendersExport
 
     public function array(): array
     {
-        $rec = Recommender::whereBetween('created_at', [$this->start_time, $this->end_time])->get()->makeHidden('status_arr')->load(['apiuser', 'buyer', 'house'])->toArray();
+        $rec = Recommender::whereBetween('created_at', [$this->start_time, $this->end_time])
+            ->where('status', '1')->get()->makeHidden('status_arr')->load(['apiuser', 'buyer', 'house'])->toArray();
         $data = [];
         foreach ($rec as $k => $v) {
             $data[$k]['id'] = $v['id'];
