@@ -18,7 +18,7 @@ class BuyersController extends BaseController
             if ($request->has('kw')&& ($kw = $request->get('kw')) != '') {
                 $query->where('phone', $kw);
             }
-        })->with(['apiuser', 'buyer', 'house'])->orderBy('created_at', 'desc')->paginate($this->pagesize);
+        })->with(['apiuser', 'buyer', 'house'])->orderBy('created_at', 'desc')->paginate(20);
         return view('admin.buyers.index', compact('buyers'));
     }
 

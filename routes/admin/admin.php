@@ -76,6 +76,10 @@ Route::group(['prefix' => 'admin', 'namespace' => 'Admin', 'as' => 'admin.'], fu
         Route::get('fangs/city', 'FangsController@city')->name('fangs.city');
         Route::resource('fangs', 'FangsController');
 
+        // 楼盘-全民营销活动参数配置
+        Route::post('houses/act_param', 'HousesController@act_param_store')->name('houses.act_param.store');
+        Route::put('houses/act_param/{actParam}', 'HousesController@act_param_update')->name('houses.act_param.update');
+        Route::get('houses/act_param/{actParam}/edit', 'HousesController@act_param_edit')->name('houses.act_param.edit');
         // 楼盘管理
         Route::resource('houses', 'HousesController');
 

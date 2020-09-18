@@ -26,6 +26,8 @@ class Apiuser extends AuthUser
     {
         // 推荐楼盘的id
         $house_id = $house_arr[0];
+        $status = '1'; // 推荐人状态默认为1未到访
+        $protect_time = Carbon::now()->addDays(30);  // 保护期时间默认为30天
 
         if (!is_array($buyer_arr)) {
             compact('buyer_arr');
@@ -67,8 +69,16 @@ class Apiuser extends AuthUser
             }
         }
 
+        // 判断该楼盘是否属于第三方审核楼盘，属于则将推荐用户状态跟改为0，保护期跟改为审核天数+1
+        $actParam = ActParam::where('house_id', $house_id)->first();
+        if (isset($actParam) && $actParam->is_check) {
+            $status = '0';
+            $num = bcadd((int)$actParam->check_day, 1);
+            $protect_time = Carbon::now()->addDays($num);
+        }
+
         $new_user = Buyer::create($buyer_arr);
-        $this->buyers()->attach($new_user->id, ['house_id' => $house_id, 'protect_time' => Carbon::now()->addDays(30)]);
+        $this->buyers()->attach($new_user->id, ['house_id' => $house_id, 'protect_time' => $protect_time, 'status' => $status]);
         return ['status' => 200, 'msg' => '推荐成功!'];
     }
 

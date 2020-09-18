@@ -27,6 +27,9 @@
                 <label class="form-label col-xs-4 col-sm-3"><span class="c-red">*</span>状态：</label>
                 <div class="formControls col-xs-8 col-sm-9">
                     @foreach($recommender_status as $status => $name)
+                        @if ($status == 0)
+                            @continue
+                        @endif
                         <div class="radio-box">
                             <input type="radio" id="radio-{{$loop->index}}" @if($recommender->status == $status) checked @endif name="status" value="{{ $status }}">
                             <label for="radio-{{$loop->index}}">{{ $name }}</label>
@@ -36,7 +39,7 @@
             </div>
             <div class="row cl">
                 <div class="col-xs-8 col-sm-9 col-xs-offset-4 col-sm-offset-3">
-                    <input class="btn btn-primary radius" type="submit" value="修改">
+                    <input class="btn btn-primary radius @if($recommender->status == 5) disabled @endif" type="submit" @if($recommender->status == 5) disabled = "disabled" @endif value="修改">
                 </div>
             </div>
         </form>

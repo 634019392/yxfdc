@@ -105,6 +105,10 @@
                     </td>
                     <td>
                         @switch($buyer['status_arr'][0])
+                            @case(0)
+                            <span class="btn btn-secondary-outline radius size-MINI">{{ $buyer['status_arr'][1] }}</span>
+                            @break
+
                             @case(1)
                             <span class="label label-default radius">{{ $buyer['status_arr'][1] }}</span>
                             @break

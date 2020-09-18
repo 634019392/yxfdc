@@ -51,6 +51,7 @@
                     <td>
                         @if($house['is_marketing'] == 1)
                             <span class="label label-success radius">是</span>
+                            <span data-house_id="{{$house['id']}}" class="label label-secondary radius act_params" style="cursor:pointer;">点击配置参数</span>
                         @else
                             <span class="label radius">否</span>
                         @endif
@@ -143,5 +144,19 @@
 
 
         }
+
+
+        $('.act_params').click(function() {
+            var house_id = $(this).data('house_id');
+            $.ajax({
+                url: "{{ route('admin.houses.act_param.store') }}",
+                type: 'post',
+                data: {house_id, _token: _token},
+            }).then(res => {
+                if (res.status === 0) {
+                    window.location.href=res.url;
+                }
+            })
+        })
     </script>
 @stop

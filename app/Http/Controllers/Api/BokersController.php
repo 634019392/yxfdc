@@ -165,7 +165,7 @@ class BokersController extends Controller
         $truename = $request->get('truename');
         $house_ids = trim($request->get('house_ids'), ',');
         if (empty($house_ids) || $house_ids == '') {
-            return response()->json(['status' => 1005, 'msg' => '必须勾选推荐楼盘'], 412);
+            return response()->json(['status' => 1005, 'msg' => '请选择意向楼盘'], 412);
         }
         $house_arr = explode(',', $house_ids);
 

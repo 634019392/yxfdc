@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Requests\Admin\HouseRequest;
+use App\Models\ActParam;
 use App\Models\House;
 use App\Models\HouseFloor;
 use App\Models\HouseIntroduce;
@@ -69,7 +70,7 @@ class HousesController extends BaseController
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param  int $id
      * @return \Illuminate\Http\Response
      */
     public function show($id)
@@ -80,7 +81,7 @@ class HousesController extends BaseController
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
+     * @param  int $id
      * @return \Illuminate\Http\Response
      */
     public function edit(House $house)
@@ -92,8 +93,8 @@ class HousesController extends BaseController
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param  \Illuminate\Http\Request $request
+     * @param  int $id
      * @return \Illuminate\Http\Response
      */
     public function update(HouseRequest $request, House $house)
@@ -109,7 +110,7 @@ class HousesController extends BaseController
         if ($request->has('house_floors')) {
             $postFloorPlan = $postArr['house_floors'];
             foreach ($postFloorPlan as $item) {
-                if (array_key_exists('id',$item)) {
+                if (array_key_exists('id', $item)) {
                     HouseFloor::updateOrCreate(['id' => $item['id']], $item);
                 } else {
                     $item['house_id'] = $house->id;
@@ -121,7 +122,7 @@ class HousesController extends BaseController
         if ($request->has('house_outlines')) {
             $house_outlines = $postArr['house_outlines']; // 户型图参数
             foreach ($house_outlines as $item) {
-                if (array_key_exists('id',$item)) {
+                if (array_key_exists('id', $item)) {
                     HouseOutline::updateOrCreate(['id' => $item['id']], $item);
                 } else {
                     $item['house_id'] = $house->id;
@@ -137,11 +138,40 @@ class HousesController extends BaseController
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param  int $id
      * @return \Illuminate\Http\Response
      */
     public function destroy($id)
     {
         //
+    }
+
+    // 全民营销活动参数新增
+    public function act_param_store(Request $request)
+    {
+        $house_id = $request->get('house_id');
+        $actParam = ActParam::where('house_id', $house_id)->first();
+        if (!$actParam) {
+            $create_ = ActParam::create(['house_id' => $house_id]);
+            if ($create_) {
+                return ['status' => 0, 'url' => route('admin.houses.act_param.edit', $create_)];
+            }
+        } else {
+            return ['status' => 0, 'url' => route('admin.houses.act_param.edit', $actParam)];
+        }
+    }
+
+    public function act_param_edit(ActParam $actParam)
+    {
+        $actParam->load('house');
+//        return $actParam;
+        return view('admin.houses.act_param_edit', compact('actParam'));
+    }
+
+    public function act_param_update(ActParam $actParam, Request $request)
+    {
+        $postData = $request->except(['_token', '_method']);
+        $actParam->update($postData);
+        return redirect()->route('admin.houses.index')->with('success', '修改参数成功!');
     }
 }

@@ -19,6 +19,12 @@ class House extends Base
         return $this->hasOne(HouseIntroduce::class);
     }
 
+    // 1对1 全民营销参数配置
+    public function act_param()
+    {
+        return $this->hasOne(ActParam::class);
+    }
+
     // 1对多 户型图
     public function houseFloors()
     {
