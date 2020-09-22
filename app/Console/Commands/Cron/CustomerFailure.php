@@ -30,16 +30,17 @@ class CustomerFailure extends Command
      */
     public function handle()
     {
-        Recommender::query()->where('status', '<=', 2)
+        Recommender::query()->where('status', '<=', '2')
             ->chunkById(1000, function ($item) {
+                print_r($item->toArray());
                 foreach($item as $val) {
                     $now = Carbon::now();
                     $protect_time = Carbon::parse($val->protect_time);
                     $diff = $now->diffInDays($protect_time, false);
                     if ($diff <= 0) {
-                        $val->status = 5;
+                        $val->status = '5';
                         $val->save();
-                        $this->info('状态更改为5，更新成功的id:' . $val->id);
+                        $this->info('更新成功的id:' . $val->id . ';状态更改为' . $val->status);
                     }
                 }
             });
