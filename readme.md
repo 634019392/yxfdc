@@ -76,3 +76,24 @@ $ crontab -e
 # 定时任务中加入，CTRL+O保存，CTRL+X退出
 * * * * * cd /path-to-your-project && php artisan schedule:run >> /dev/null 2>&1
 ```
+
+#####7.配置微信公众号
+```.env text
+WECHAT_OFFICIAL_ACCOUNT_APPID=
+WECHAT_OFFICIAL_ACCOUNT_SECRET=
+WECHAT_OFFICIAL_ACCOUNT_TOKEN=
+```
+同时设置微信公众号的ip白名单
+数据表nodes中添加如下
+```
+pid 20 = 广告管理的id
+|        name     |      route_name      | pid | is_menu |
+| --------------- | -------------------- | --- | ------- |
+|    房产资讯列表   |  admin.boards.index  | 20  |    1    |
+```
+```linux
+# 避免权限问题，同时生成新表
+~ php artisan cache:clear
+~ chmod -R 777 storage
+~ php artisan migrate
+```

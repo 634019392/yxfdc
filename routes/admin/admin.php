@@ -99,6 +99,12 @@ Route::group(['prefix' => 'admin', 'namespace' => 'Admin', 'as' => 'admin.'], fu
         Route::post('buyers/{recommender}/tail_create', 'BuyersController@tail_create')->name('buyers.tail_create');
         // 客户跟踪-客户记录更新功能
         Route::put('buyers/tail/{clientRecord}', 'BuyersController@tail_update')->name('buyers.tail_update');
+
+        // 公告栏
+        Route::get('boards/create_news', 'BoardsController@create_news')->name('boards.create_news');
+        Route::any('boards/wechat_gather', 'BoardsController@wechat_gather')->name('boards.wechat_gather');
+        Route::post('boards/store_news', 'BoardsController@store_news')->name('boards.store_news');
+        Route::resource('boards', 'BoardsController');
     });
 
 

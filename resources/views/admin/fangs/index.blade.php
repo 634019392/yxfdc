@@ -130,7 +130,7 @@
                     })
                 } else {
                     layer.msg('请选择最少一条', {time: 1000})
-                    layer.close(index);
+                    //layer.close(index);
                 }
 
             });

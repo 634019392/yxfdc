@@ -5,7 +5,7 @@
 
 @section('content')
 
-    <div class="pd-20">
+    <div class="pd-20" style="white-space:nowrap;">
         <div class="text-c"> 搜索客户手机号：
             <form action="{{ route('admin.buyers.index') }}" method="get">
                 <input type="text" class="input-text" style="width:250px" value="{{ request()->get('kw') }}" placeholder="输入客户手机号" name="kw">
@@ -138,7 +138,9 @@
                     </td>
                     <td>
                         {!! $buyer->editBtn('admin.buyers.edit') !!}
-                        {!! $buyer->atWillBtn('admin.buyers.tail') !!}
+                        @if($buyer['status_arr'][0] != '0')
+                            {!! $buyer->atWillBtn('admin.buyers.tail') !!}
+                        @endif
                     </td>
                 </tr>
             @endforeach

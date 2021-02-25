@@ -11,9 +11,18 @@
 |
 */
 
+Route::group(['namespace' => 'Wechat'], function() {
+    Route::any('/wechat', 'WeChatController@serve');
+});
+
 Route::get('/', function () {
     return 'this is a home';
 });
+
+// 房产资讯（公告栏）内容h5渲染
+Route::get('/board/content/{board}', function (\App\Models\Board $board) {
+    return view('board.index', compact('board'));
+})->name('board');
 
 include base_path('routes/admin/admin.php');
 
