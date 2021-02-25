@@ -59,8 +59,8 @@ return [
      */
     'official_account' => [
         'default' => [
-            'app_id'  => env('WECHAT_OFFICIAL_ACCOUNT_APPID', 'wx164d116424941291'),         // AppID wx164d116424941291是nor测试号
-            'secret'  => env('WECHAT_OFFICIAL_ACCOUNT_SECRET', '9c0a0c619def5a2cdcb9a7ab85f62e43'),    // AppSecret
+            'app_id'  => env('WECHAT_OFFICIAL_ACCOUNT_APPID', ''),         // AppID wx164d116424941291是nor测试号
+            'secret'  => env('WECHAT_OFFICIAL_ACCOUNT_SECRET', ''),    // AppSecret
             'token'   => env('WECHAT_OFFICIAL_ACCOUNT_TOKEN', 'your-token'),           // Token
             'aes_key' => env('WECHAT_OFFICIAL_ACCOUNT_AES_KEY', ''),                 // EncodingAESKey
 
