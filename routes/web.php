@@ -1,5 +1,4 @@
 <?php
-
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -18,6 +17,8 @@ Route::group(['namespace' => 'Wechat'], function() {
 Route::get('/', function () {
     return 'this is a home';
 });
+
+Route::get('/test', 'TestsController@test');
 
 // 房产资讯（公告栏）内容h5渲染
 Route::get('/board/content/{board}', function (\App\Models\Board $board) {

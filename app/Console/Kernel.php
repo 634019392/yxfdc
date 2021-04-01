@@ -31,6 +31,11 @@ class Kernel extends ConsoleKernel
                   ->cron('0 1 * * *');
          $schedule->command('cron:clean-excel')
                   ->cron('50 0 * * *');
+
+        $schedule->command('cron:crawl-area')
+            ->cron('00 22 * * *');
+        $schedule->command('cron:crawl-data')
+            ->cron('02 22 * * *');
     }
 
     /**
