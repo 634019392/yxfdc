@@ -110,6 +110,8 @@ class CrawlData extends Command
             $tableRows = $table->find('tr:gt(0)')->map(function ($row) use ($keyword) {
                 $new_data = [];
                 $data = $row->find('td')->texts()->all();
+                $data_amend = QueryList::html($row->find('td')->html())->find('span')->title;
+                $data[1] = $data_amend;
 //            if (strstr($keyword, 'xsmj1') || strstr($keyword, 'xsts1') || strstr($keyword, 'zgjj1') || strstr($keyword, 'zdjj1')) {
 //                $new_data['type'] = '1';
 //            } elseif (strstr($keyword, 'xsmj2') || strstr($keyword, 'xsts2') || strstr($keyword, 'zgjj2') || strstr($keyword, 'zdjj2')) {
@@ -179,6 +181,8 @@ class CrawlData extends Command
             $tableRows = $table->find('tr:gt(0)')->map(function ($row) use ($keyword) {
                 $new_data = [];
                 $data = $row->find('td')->texts()->all();
+                $data_amend = QueryList::html($row->find('td')->html())->find('span')->title;
+                $data[1] = $data_amend;
                 if (strstr($keyword, '1')) {
                     $new_data['type'] = '1';
                 } elseif (strstr($keyword, '2')) {
@@ -243,6 +247,8 @@ class CrawlData extends Command
             $tableRows = $table->find('tr:gt(0)')->map(function ($row) use ($keyword) {
                 $new_data = [];
                 $data = $row->find('td')->texts()->all();
+                $data_amend = QueryList::html($row->find('td')->html())->find('span')->title;
+                $data[1] = $data_amend;
                 if (strstr($keyword, '1')) {
                     $new_data['type'] = '1';
                 } elseif (strstr($keyword, '2')) {
@@ -306,6 +312,8 @@ class CrawlData extends Command
             $tableRows = $table->find('tr:gt(0)')->map(function ($row) use ($keyword) {
                 $new_data = [];
                 $data = $row->find('td')->texts()->all();
+                $data_amend = QueryList::html($row->find('td')->html())->find('span')->title;
+                $data[1] = $data_amend;
                 if (strstr($keyword, '1')) {
                     $new_data['type'] = '1';
                 } elseif (strstr($keyword, '2')) {
