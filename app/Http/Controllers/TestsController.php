@@ -4,9 +4,11 @@ namespace App\Http\Controllers;
 
 use App\Models\CrawlAreaGyyxs;
 use App\Models\CrawlAreaThismonth;
-use App\Models\CrawlAreaBeformonth;
-use App\Models\CrawlAreaYear;
-use App\Models\CrawlAreaToday;
+use App\Models\CrawlDataZdjj;
+use App\Models\CrawlDataZgjj;
+use App\Models\CrawlDataXsts;
+use App\Models\CrawlDataXsmj;
+use App\Models\CrawlQsfxData;
 use QL\QueryList;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
@@ -19,5 +21,8 @@ class TestsController extends Controller
     {
 
     }
+
+
+
 
 }
