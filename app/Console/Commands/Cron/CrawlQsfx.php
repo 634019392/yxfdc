@@ -6,7 +6,7 @@ use App\Models\CrawlQsfxData;
 use QL\QueryList;
 use Illuminate\Console\Command;
 
-class CarwlQsfx extends Command
+class CrawlQsfx extends Command
 {
     /**
      * The name and signature of the console command.
