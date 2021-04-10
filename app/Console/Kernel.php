@@ -38,6 +38,8 @@ class Kernel extends ConsoleKernel
             ->cron('02 22 * * *');
         $schedule->command('cron:crawl-qsfx')
             ->cron('04 22 * * *');
+        $schedule->command('cron:crawl-hslxfx')
+            ->cron('00 21 * * *');
     }
 
     /**
