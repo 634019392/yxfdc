@@ -26,6 +26,7 @@ Route::get('/board/content/{board}', function (\App\Models\Board $board) {
 })->name('board');
 
 include base_path('routes/admin/admin.php');
+include base_path('routes/other/crawl.php');
 
 Route::post('admin/upfile', 'PhotosController@upfile')->name('admin.upfile');
 Route::post('admin/delfile', 'PhotosController@delfile')->name('admin.delfile');
